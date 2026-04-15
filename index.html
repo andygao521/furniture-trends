@@ -635,7 +635,7 @@
 <div class="header">
   <h1>🪑 家具家装行业风向看板</h1>
   <div class="sub">
-    <span>小红书电商 · 交易部八部</span>
+    <span>小红书电商 · 行业三部-七组（家具）</span>
     <span class="tag">近7天 · 动销商家</span>
     <span class="tag" id="week-label">W16 · 04.07—04.13</span>
   </div>
@@ -670,31 +670,8 @@
 
   <!-- 1. 行业基准数据 -->
   <div class="section-title">📊 行业基准数据</div>
-  <div class="bench-grid">
-    <div class="bench-card top">
-      <div class="label">🏆 TOP商家 <span class="badge">发布量前20%</span></div>
-      <div class="metric-row"><span class="name">日均发布</span><span class="val">4+篇/天</span></div>
-      <div class="metric-row"><span class="name">商笔 CTR</span><span class="val">18%+</span></div>
-      <div class="metric-row"><span class="name">商品转化率</span><span class="val">8%+</span></div>
-      <div class="metric-row"><span class="name">直播场均时长</span><span class="val">3.5h+</span></div>
-      <div class="bench-note">参考标准：沙发/床架/定制柜品类标杆店铺</div>
-    </div>
-    <div class="bench-card avg">
-      <div class="label">📊 行业均值 <span class="badge">动销商家均值</span></div>
-      <div class="metric-row"><span class="name">日均发布</span><span class="val">1~2篇/天</span></div>
-      <div class="metric-row"><span class="name">商笔 CTR</span><span class="val">9%</span></div>
-      <div class="metric-row"><span class="name">商品转化率</span><span class="val">3.5%</span></div>
-      <div class="metric-row"><span class="name">直播场均时长</span><span class="val">2h</span></div>
-      <div class="bench-note">家具家装赛道约 1,200 家动销商家参考均值</div>
-    </div>
-    <div class="bench-card low">
-      <div class="label">⚠️ 待提升 <span class="badge">低于均值30%</span></div>
-      <div class="metric-row"><span class="name">日均发布</span><span class="val">&lt;1篇/天</span></div>
-      <div class="metric-row"><span class="name">商笔 CTR</span><span class="val">&lt;4%</span></div>
-      <div class="metric-row"><span class="name">商品转化率</span><span class="val">&lt;1.5%</span></div>
-      <div class="metric-row"><span class="name">直播场均时长</span><span class="val">&lt;1h</span></div>
-      <div class="bench-note">重点关注对象，需 AM 主动介入诊断</div>
-    </div>
+  <div class="bench-grid" id="bench-grid">
+    <!-- JS动态渲染 -->
   </div>
 
   <!-- 2. 品类风向 -->
@@ -717,439 +694,25 @@
   </div>
 
   <div class="trend-grid" id="trend-container">
-
-    <!-- 沙发 -->
-    <div class="trend-card" data-cat="sofa">
-      <div class="cat-header">
-        <span class="cat-icon">🛋️</span>
-        <div>
-          <div class="cat-name">沙发</div>
-          <div class="cat-sub">客厅主角，高客单决策周期长</div>
-        </div>
-      </div>
-      <div class="trend-item">
-        <span class="num">1</span>
-        <div class="content"><strong>到家实拍改造对比</strong>：客厅换沙发前后对比，「换了一张沙发，客厅像换了个家」，
-          氛围感封面 CTR <span class="ctr-tag">28%+</span>，买家秀转化远超商品图</div>
-      </div>
-      <div class="trend-item">
-        <span class="num">2</span>
-        <div class="content"><strong>材质触感实测</strong>：绒布 vs 皮质 vs 猫爪布坐感比较，
-          「摸了20张沙发最终选这款」，决策型内容商卡 CTR <span class="ctr-tag">15~22%</span></div>
-      </div>
-      <div class="trend-item">
-        <span class="num">3</span>
-        <div class="content"><strong>小户型尺寸公式</strong>：60㎡/90㎡+沙发尺寸搭配，
-          精准解决选购焦虑，曝光 50万+，转化稳定持续</div>
-      </div>
-      <div class="trend-focus">🎯 重点关注：到家改造对比 + 材质实测</div>
-    </div>
-
-    <!-- 床 -->
-    <div class="trend-card" data-cat="bed">
-      <div class="cat-header">
-        <span class="cat-icon">🛏️</span>
-        <div>
-          <div class="cat-name">床</div>
-          <div class="cat-sub">五一装修季爆发，套装客单高</div>
-        </div>
-      </div>
-      <div class="trend-item">
-        <span class="num">1</span>
-        <div class="content"><strong>整屋卧室套装种草</strong>：床架+床头柜+灯具一镜展示，
-          「我的ins风卧室全靠这套」，组合客单高，转化 <span class="ctr-tag">12%+</span></div>
-      </div>
-      <div class="trend-item">
-        <span class="num">2</span>
-        <div class="content"><strong>儿童/青少年房场景</strong>：上下铺+收纳功能创意设计，
-          亲子场景精准父母圈层，曝光 30万+ 多条持续跑量</div>
-      </div>
-      <div class="trend-item">
-        <span class="num">3</span>
-        <div class="content"><strong>安装过程 vlog</strong>：拆箱→安装→完成全程记录，
-          「一个人装床可以吗？亲测可以！」，真实感强，CTR <span class="ctr-tag">18%+</span></div>
-      </div>
-      <div class="trend-focus">🎯 重点关注：整屋套装 + 五一装修提前布局</div>
-    </div>
-
-    <!-- 床垫 -->
-    <div class="trend-card" data-cat="mattress">
-      <div class="cat-header">
-        <span class="cat-icon">💤</span>
-        <div>
-          <div class="cat-name">床垫</div>
-          <div class="cat-sub">睡眠经济强需求，复购/升级消费</div>
-        </div>
-      </div>
-      <div class="trend-item">
-        <span class="num">1</span>
-        <div class="content"><strong>睡眠痛点切入</strong>：腰痛/睡不好/翻身有声音，「换了这张床垫，腰不疼了」，
-          功效型内容商卡 CTR <span class="ctr-tag">20%+</span>，搜索承接强</div>
-      </div>
-      <div class="trend-item">
-        <span class="num">2</span>
-        <div class="content"><strong>软硬度选购科普</strong>：用体重/睡姿对应软硬度图表，
-          「你的体重适合几硬的床垫」，知识型内容收藏量大，长尾带量明显</div>
-      </div>
-      <div class="trend-item">
-        <span class="num">3</span>
-        <div class="content"><strong>材质拆解测评</strong>：乳胶/弹簧/记忆棉剖面展示+压力测试，
-          「花3000块买床垫，这些你必须知道」，信任建立快，CTR <span class="ctr-tag">16%</span></div>
-      </div>
-      <div class="trend-focus">🎯 重点关注：睡眠痛点 + 科学选购内容</div>
-    </div>
-
-    <!-- 柜类 -->
-    <div class="trend-card" data-cat="cabinet">
-      <div class="cat-header">
-        <span class="cat-icon">🗄️</span>
-        <div>
-          <div class="cat-name">柜类</div>
-          <div class="cat-sub">定制柜/成品柜，高利润高询单</div>
-        </div>
-      </div>
-      <div class="trend-item">
-        <span class="num">1</span>
-        <div class="content"><strong>工地→完工全程</strong>：毛坯到精装全程记录，
-          「我家玄关柜这样做，进门就不一样了」，过程感内容 CTR <span class="ctr-tag">32%+</span></div>
-      </div>
-      <div class="trend-item">
-        <span class="num">2</span>
-        <div class="content"><strong>报价透明化</strong>：「20㎡玄关柜我花了多少钱」，
-          拆解工艺+材料+安装费，价格透明建信任，商卡 CTR <span class="ctr-tag">18%</span>，询单转化强</div>
-      </div>
-      <div class="trend-item">
-        <span class="num">3</span>
-        <div class="content"><strong>收纳大反差</strong>：乱屋→整屋15秒视频，
-          「我妈说这是她见过最整洁的家」，爽感内容单条曝光最高 80万+</div>
-      </div>
-      <div class="trend-focus">🎯 重点关注：工地完工对比 + 报价透明</div>
-    </div>
-
-    <!-- 灯具 -->
-    <div class="trend-card" data-cat="light">
-      <div class="cat-header">
-        <span class="cat-icon">💡</span>
-        <div>
-          <div class="cat-name">灯具</div>
-          <div class="cat-sub">氛围感强，冲动消费高频品类</div>
-        </div>
-      </div>
-      <div class="trend-item">
-        <span class="num">1</span>
-        <div class="content"><strong>开灯前后氛围对比</strong>：同一空间关灯/开灯画面切换，
-          「换了这盏灯，家里像换了个人」，视觉冲击强，CTR <span class="ctr-tag">30%+</span></div>
-      </div>
-      <div class="trend-item">
-        <span class="num">2</span>
-        <div class="content"><strong>色温/亮度选购指南</strong>：不同功能空间对应色温数值，
-          「客厅餐厅卧室灯的色温别搞错」，知识型内容收藏高，带动长尾搜索</div>
-      </div>
-      <div class="trend-item">
-        <span class="num">3</span>
-        <div class="content"><strong>氛围角落搭配</strong>：灯串+绿植+藤编，
-          「花200块让这个角落成了我家最好看的地方」，低客单冲动购，CTR <span class="ctr-tag">22%</span></div>
-      </div>
-      <div class="trend-focus">🎯 重点关注：开灯对比视频 + 氛围角落搭配</div>
-    </div>
-
-    <!-- 坐具/椅子 -->
-    <div class="trend-card" data-cat="chair">
-      <div class="cat-header">
-        <span class="cat-icon">🪑</span>
-        <div>
-          <div class="cat-name">坐具 / 椅子</div>
-          <div class="cat-sub">人体工学+颜值双驱动，居家办公需求强</div>
-        </div>
-      </div>
-      <div class="trend-item">
-        <span class="num">1</span>
-        <div class="content"><strong>久坐腰痛痛点</strong>：「居家办公3年，我试了8把椅子」，
-          人体工学背靠/坐深/扶手调节实测，CTR <span class="ctr-tag">26%+</span>，搜索承接精准</div>
-      </div>
-      <div class="trend-item">
-        <span class="num">2</span>
-        <div class="content"><strong>颜值融入家居场景</strong>：椅子+书桌+绿植整体展示，
-          「这把椅子放哪里都好看」，种草逻辑从功能转向颜值，CTR <span class="ctr-tag">20%</span></div>
-      </div>
-      <div class="trend-item">
-        <span class="num">3</span>
-        <div class="content"><strong>多场景椅类横评</strong>：餐椅/休闲椅/办公椅三类对比，
-          「买椅子搞清楚这3种，不踩坑」，收藏型内容带动搜索转化</div>
-      </div>
-      <div class="trend-focus">🎯 重点关注：居家办公痛点 + 颜值场景融合</div>
-    </div>
-
-    <!-- 餐桌椅 -->
-    <div class="trend-card" data-cat="dining">
-      <div class="cat-header">
-        <span class="cat-icon">🍽️</span>
-        <div>
-          <div class="cat-name">餐桌椅</div>
-          <div class="cat-sub">套装高客单，家庭用餐场景强需求</div>
-        </div>
-      </div>
-      <div class="trend-item">
-        <span class="num">1</span>
-        <div class="content"><strong>餐厅改造前后</strong>：餐桌换新+软装调整一镜展示，
-          「换了张餐桌，我开始爱上在家吃饭了」，CTR <span class="ctr-tag">24%+</span>，氛围感驱动购买</div>
-      </div>
-      <div class="trend-item">
-        <span class="num">2</span>
-        <div class="content"><strong>小户型伸缩/折叠方案</strong>：「60㎡怎么放下一张6人餐桌」，
-          功能解法精准拦截装修需求，询单转化强</div>
-      </div>
-      <div class="trend-item">
-        <span class="num">3</span>
-        <div class="content"><strong>材质耐用性实测</strong>：岩板 vs 实木 vs 亚克力防污测试，
-          「泼了一碗红汤，擦干净看不出来」，信任内容 CTR <span class="ctr-tag">17%</span></div>
-      </div>
-      <div class="trend-focus">🎯 重点关注：餐厅改造对比 + 小户型功能解法</div>
-    </div>
-
-    <!-- 几类/架类 -->
-    <div class="trend-card" data-cat="shelf">
-      <div class="cat-header">
-        <span class="cat-icon">🪞</span>
-        <div>
-          <div class="cat-name">几类 / 架类</div>
-          <div class="cat-sub">低客单高频，装饰与收纳双属性</div>
-        </div>
-      </div>
-      <div class="trend-item">
-        <span class="num">1</span>
-        <div class="content"><strong>角落改造单品</strong>：一个茶几/一个花架改变整个角落，
-          「花300块这个角落成了我家最好看的地方」，低成本种草 CTR <span class="ctr-tag">22%+</span></div>
-      </div>
-      <div class="trend-item">
-        <span class="num">2</span>
-        <div class="content"><strong>多功能属性展示</strong>：边几/角几兼做收纳/展示架，
-          「别小看这个小桌子，我用它解决了3个收纳难题」，功能感内容转化强</div>
-      </div>
-      <div class="trend-item">
-        <span class="num">3</span>
-        <div class="content"><strong>组合搭配陈列</strong>：架类+绿植+摆件整体出镜，
-          「光一个展示架，把我家书房变成了咖啡馆」，氛围感内容曝光 20万+</div>
-      </div>
-      <div class="trend-focus">🎯 重点关注：角落低成本改造 + 多功能演示</div>
-    </div>
-
+    <!-- JS动态渲染 -->
   </div><!-- end trend-grid -->
 
   <!-- 3. 标题公式 -->
   <div class="section-title">✍️ 本周标题公式</div>
-  <div class="formula-list">
-
-    <div class="formula-card">
-      <div class="f-header">
-        <span class="f-num">01</span>
-        <span class="f-title">场景痛点 + 面积/预算数字 + 解决结果</span>
-      </div>
-      <div class="formula-parts">
-        <span class="part">面积/预算</span>
-        <span class="plus">+</span>
-        <span class="part">具体场景痛点</span>
-        <span class="plus">+</span>
-        <span class="part">惊喜结果</span>
-      </div>
-      <div class="formula-examples">
-        <span>「60㎡小户型，这套沙发真的救了我的客厅！」</span>
-        <span>「3000块搞定全屋收纳，朋友来了都以为我换了新房」</span>
-      </div>
-    </div>
-
-    <div class="formula-card">
-      <div class="f-header">
-        <span class="f-num">02</span>
-        <span class="f-title">专业身份背书 + 避坑/选购核心结论</span>
-      </div>
-      <div class="formula-parts">
-        <span class="part">职业年限/专业身份</span>
-        <span class="plus">+</span>
-        <span class="part">不会/不买/后悔</span>
-        <span class="plus">+</span>
-        <span class="part">具体品类/款式</span>
-      </div>
-      <div class="formula-examples">
-        <span>「做了16年家具，这3款沙发我绝对不会买」</span>
-        <span>「室内设计师选床垫从不看这个，你被骗多少年了？」</span>
-      </div>
-    </div>
-
-    <div class="formula-card">
-      <div class="f-header">
-        <span class="f-num">03</span>
-        <span class="f-title">改造前后对比 + 情绪表达</span>
-      </div>
-      <div class="formula-parts">
-        <span class="part">动词（换/加/拆）</span>
-        <span class="plus">+</span>
-        <span class="part">具体单品</span>
-        <span class="plus">+</span>
-        <span class="part">情绪感叹词</span>
-      </div>
-      <div class="formula-examples">
-        <span>「换了这张茶几，客厅感觉大了10㎡！」</span>
-        <span>「拆掉实木床头，整个卧室气质都不一样了」</span>
-      </div>
-    </div>
-
-    <div class="formula-card">
-      <div class="f-header">
-        <span class="f-num">04</span>
-        <span class="f-title">五一/节点借势 + 行动号召</span>
-      </div>
-      <div class="formula-parts">
-        <span class="part">五一/假期</span>
-        <span class="plus">+</span>
-        <span class="part">装修/换新</span>
-        <span class="plus">+</span>
-        <span class="part">不做后悔型警示</span>
-      </div>
-      <div class="formula-examples">
-        <span>「五一前不换沙发，假期真的会后悔」</span>
-        <span>「五一装修清单 | 家具这3样一定要提前订」</span>
-      </div>
-    </div>
-
+  <div class="formula-list" id="formula-list">
+    <!-- JS动态渲染 -->
   </div>
 
   <!-- 4. 热点话题 -->
   <div class="section-title">🔥 本周热点话题 / 节点</div>
-  <div class="topic-card">
-    <div class="topic-block">
-      <div class="t-label">高频标题词</div>
-      <div class="tags-wrap">
-        <span class="topic-tag hot">#小户型改造</span>
-        <span class="topic-tag hot">#全屋定制</span>
-        <span class="topic-tag hot">#买家秀</span>
-        <span class="topic-tag hot">#沙发避坑</span>
-        <span class="topic-tag hot">#家居改造</span>
-      </div>
-    </div>
-    <div class="topic-block">
-      <div class="t-label">上升场景词</div>
-      <div class="tags-wrap">
-        <span class="topic-tag rise">#五一装修</span>
-        <span class="topic-tag rise">#阳台改造</span>
-        <span class="topic-tag rise">#新家软装</span>
-        <span class="topic-tag rise">#出租屋改造</span>
-        <span class="topic-tag rise">#设计师同款</span>
-      </div>
-    </div>
-    <div class="topic-block">
-      <div class="t-label">本周节点</div>
-      <div class="tags-wrap">
-        <span class="topic-tag node">#五一黄金周（前3周蓄水期）</span>
-        <span class="topic-tag node">#谷雨·春日焕新</span>
-        <span class="topic-tag node">#装修旺季开启</span>
-      </div>
-    </div>
+  <div class="topic-card" id="topic-card">
+    <!-- JS动态渲染 -->
   </div>
 
   <!-- 5. 品类方向动向 -->
   <div class="section-title">📦 品类风向动向</div>
-  <div class="dir-grid">
-
-    <div class="dir-card">
-      <div class="d-header">
-        <span class="d-icon">🛋️</span>
-        <span class="d-name">沙发</span>
-      </div>
-      <div class="dir-item"><span class="arrow up">↑</span><span>到家实拍改造对比持续跑量，CTR 28%+</span></div>
-      <div class="dir-item"><span class="arrow up">↑</span><span>小户型尺寸指南精准拦截装修需求，转化稳定</span></div>
-      <div class="dir-item"><span class="arrow flat">→</span><span>猫爪布/绒布材质热度维持，功能测评内容保持</span></div>
-      <div class="dir-focus">✅ 重点关注：到家改造对比 + 小户型选购</div>
-    </div>
-
-    <div class="dir-card">
-      <div class="d-header">
-        <span class="d-icon">🛏️</span>
-        <span class="d-name">床</span>
-      </div>
-      <div class="dir-item"><span class="arrow up">↑</span><span>五一前整屋卧室套装爆发，组合客单提升</span></div>
-      <div class="dir-item"><span class="arrow up">↑</span><span>儿童房/青少年房精准父母圈层，曝光稳定</span></div>
-      <div class="dir-item"><span class="arrow flat">→</span><span>安装 vlog 内容真实感强，CTR 18%+</span></div>
-      <div class="dir-focus">✅ 重点关注：整屋套装 + 五一提前布局</div>
-    </div>
-
-    <div class="dir-card">
-      <div class="d-header">
-        <span class="d-icon">💤</span>
-        <span class="d-name">床垫</span>
-      </div>
-      <div class="dir-item"><span class="arrow up">↑</span><span>睡眠痛点（腰痛/失眠）内容商卡 CTR 20%+</span></div>
-      <div class="dir-item"><span class="arrow up">↑</span><span>软硬度选购指南收藏量大，长尾带量明显</span></div>
-      <div class="dir-item"><span class="arrow flat">→</span><span>材质剖面测评建立信任，CTR 16%</span></div>
-      <div class="dir-focus">✅ 重点关注：睡眠痛点 + 科学选购科普</div>
-    </div>
-
-    <div class="dir-card">
-      <div class="d-header">
-        <span class="d-icon">🗄️</span>
-        <span class="d-name">柜类</span>
-      </div>
-      <div class="dir-item"><span class="arrow up">↑</span><span>工地完工反差内容 CTR 32%+，询单转化最强</span></div>
-      <div class="dir-item"><span class="arrow up">↑</span><span>报价透明化内容建立信任，商卡点击率高</span></div>
-      <div class="dir-item"><span class="arrow flat">→</span><span>收纳前后大反差爽感内容长期跑量，曝光 80万+</span></div>
-      <div class="dir-focus">✅ 重点关注：工地完工过程 + 报价透明</div>
-    </div>
-
-    <div class="dir-card">
-      <div class="d-header">
-        <span class="d-icon">💡</span>
-        <span class="d-name">灯具</span>
-      </div>
-      <div class="dir-item"><span class="arrow up">↑</span><span>开灯前后对比视频本周最高 CTR 30%+，冲动购强</span></div>
-      <div class="dir-item"><span class="arrow up">↑</span><span>五一前氛围角落搭配内容爆量，低客单转化快</span></div>
-      <div class="dir-item"><span class="arrow flat">→</span><span>色温/亮度选购科普收藏量大，搜索长尾稳定</span></div>
-      <div class="dir-focus">✅ 重点关注：开灯对比 + 氛围搭配低客单种草</div>
-    </div>
-
-    <div class="dir-card">
-      <div class="d-header">
-        <span class="d-icon">🪑</span>
-        <span class="d-name">坐具 / 椅子</span>
-      </div>
-      <div class="dir-item"><span class="arrow up">↑</span><span>居家办公腰痛痛点内容 CTR 26%+，搜索承接精准</span></div>
-      <div class="dir-item"><span class="arrow flat">→</span><span>颜值场景融合内容种草逻辑从功能转向美学</span></div>
-      <div class="dir-item"><span class="arrow flat">→</span><span>多类横评（餐椅/休闲/办公）收藏型内容稳定</span></div>
-      <div class="dir-focus">✅ 重点关注：居家办公痛点 + 颜值场景</div>
-    </div>
-
-    <div class="dir-card">
-      <div class="d-header">
-        <span class="d-icon">🍽️</span>
-        <span class="d-name">餐桌椅</span>
-      </div>
-      <div class="dir-item"><span class="arrow up">↑</span><span>餐厅改造前后内容 CTR 24%+，氛围感驱动购买</span></div>
-      <div class="dir-item"><span class="arrow flat">→</span><span>小户型伸缩/折叠方案询单转化强，装修需求精准</span></div>
-      <div class="dir-item"><span class="arrow flat">→</span><span>岩板/实木材质耐用性测试建立信任，CTR 17%</span></div>
-      <div class="dir-focus">✅ 重点关注：餐厅改造对比 + 小户型功能解法</div>
-    </div>
-
-    <div class="dir-card">
-      <div class="d-header">
-        <span class="d-icon">🪞</span>
-        <span class="d-name">几类 / 架类</span>
-      </div>
-      <div class="dir-item"><span class="arrow up">↑</span><span>低成本角落改造内容 CTR 22%+，冲动购高频</span></div>
-      <div class="dir-item"><span class="arrow flat">→</span><span>多功能属性演示转化强，收纳解题思路内容受欢迎</span></div>
-      <div class="dir-item"><span class="arrow flat">→</span><span>架类+绿植+摆件组合陈列氛围感曝光 20万+</span></div>
-      <div class="dir-focus">✅ 重点关注：角落低成本改造 + 多功能演示</div>
-    </div>
-
-    <div class="dir-card" style="grid-column: span 2;">
-      <div class="d-header">
-        <span class="d-icon">⚠️</span>
-        <span class="d-name">合规提醒（全品类）</span>
-      </div>
-      <div class="dir-item"><span class="arrow down">↓</span><span>「最环保」「第一」等极限词笔记本周处罚案例增多</span></div>
-      <div class="dir-item"><span class="arrow down">↓</span><span>无资质宣称「甲醛检测达标」类内容存在下架风险</span></div>
-      <div class="dir-item"><span class="arrow flat">→</span><span>建议改用「实测低醛」「附第三方检测报告」等合规表达</span></div>
-      <div class="dir-focus" style="background:#fff0f2; color: var(--red);">⚠️ 合规红线：极限词 + 无资质检测宣称</div>
-    </div>
-
+  <div class="dir-grid" id="dir-grid">
+    <!-- JS动态渲染 -->
   </div>
 
 </div><!-- end main -->
@@ -1242,7 +805,7 @@
 </div><!-- end page-tools -->
 
 <div class="footer">
-  家具家装行业风向看板 · 小红书电商 · 交易部八部<br>
+  家具家装行业风向看板 · 小红书电商 · 行业三部-七组（家具）<br>
   数据基于行业动销商家笔记表现提炼 · 每周更新 · 仅供内部参考
 </div>
 
@@ -1255,18 +818,343 @@
     document.getElementById('page-' + tab).classList.add('active');
   }
 
-  // ── Week switcher ──
-  const weekData = {
-    'W14': { label: 'W14 · 2026.03.24—03.30', desc: 'W14 · 03.24—03.30' },
-    'W15': { label: 'W15 · 2026.03.31—04.06', desc: 'W15 · 03.31—04.06' },
-    'W16': { label: 'W16 · 2026.04.07—04.13', desc: 'W16 · 04.07—04.13（本周）' },
+  // ── Week Data & Switcher ──
+  const weekMeta = {
+    'W14': { label: 'W14 · 2026.03.24—03.30', desc: 'W14 · 03.24—03.30', announce: '3月下旬家具行业进入春季装修预热期，建议商家提前布局卧室/收纳品类内容。' },
+    'W15': { label: 'W15 · 2026.03.31—04.06', desc: 'W15 · 03.31—04.06', announce: '清明小长假前，户外/阳台品类内容开始起量，建议测试露台改造场景。' },
+    'W16': { label: 'W16 · 2026.04.07—04.13', desc: 'W16 · 04.07—04.13（本周）', announce: '五一黄金周前 3 周内容布局期，建议本周集中测试"家装改造场景"和"买手开箱"内容，抢占五一家居消费心智。' },
   };
+
+  // 各周数据（实际使用时替换为真实数据）
+  const weekData = {
+    'W14': {
+      bench: { top:{post:'3+篇/天', ctr:'16%+', cvr:'7%+', live:'3h+'}, avg:{post:'1~2篇/天', ctr:'8%', cvr:'3%', live:'1.8h'}, low:{post:'<1篇/天', ctr:'<3.5%', cvr:'<1.2%', live:'<50min'} },
+      trends: {
+        sofa: [
+          {t:'场景氛围感封面', d:'客厅整体搭配展示，强调沙发与空间融合', ctr:'22%+'},
+          {t:'材质对比实测', d:'布艺vs皮质耐磨测试，用钥匙刮擦实拍', ctr:'14~18%'},
+          {t:'尺寸选购指南', d:'小户型沙发尺寸公式，附户型图标注', ctr:'稳定'}
+        ],
+        bed: [
+          {t:'卧室氛围营造', d:'床品+灯光+窗帘整体搭配，ins风展示', ctr:'15%+'},
+          {t:'实木床架工艺', d:'榫卯结构特写，强调传统工艺', ctr:'12%'},
+          {t:'储物功能演示', d:'床底收纳空间实测，放行李箱展示', ctr:'10%+'}
+        ],
+        mattress: [
+          {t:'睡眠质量改善', d:'用户真实反馈，前后精神状态对比', ctr:'18%+'},
+          {t:'材质科普', d:'乳胶/弹簧/棕垫剖面对比', ctr:'14%'},
+          {t:'试睡体验', d:'100天试睡政策解读，降低决策门槛', ctr:'高转化'}
+        ],
+        cabinet: [
+          {t:'定制流程展示', d:'从量房到安装全流程记录', ctr:'28%+'},
+          {t:'收纳前后对比', d:'杂乱衣柜→整洁收纳，视觉冲击强', ctr:'25%+'},
+          {t:'板材环保科普', d:'E0/E1级板材对比检测', ctr:'信任建立'}
+        ],
+        light: [
+          {t:'灯光氛围营造', d:'同一场景不同色温对比', ctr:'26%+'},
+          {t:'安装教程', d:'DIY换灯教程，女生视角', ctr:'收藏高'},
+          {t:'护眼功能', d:'频闪测试+蓝光检测', ctr:'亲子家庭'}
+        ],
+        chair: [
+          {t:'人体工学实测', d:'8小时久坐体验，腰靠支撑测试', ctr:'24%+'},
+          {t:'多场景搭配', d:'书房/餐厅/阳台不同风格展示', ctr:'18%'},
+          {t:'材质透气性', d:'夏季久坐不闷热实测', ctr:'季节性'}
+        ],
+        dining: [
+          {t:'餐厅改造', d:'餐桌换新前后对比，氛围提升', ctr:'20%+'},
+          {t:'材质耐用测试', d:'高温/刮擦/污渍测试', ctr:'16%'},
+          {t:'伸缩功能演示', d:'小户型变大餐桌过程展示', ctr:'功能导向'}
+        ],
+        shelf: [
+          {t:'角落改造', d:'1㎡空间变身咖啡角/阅读角', ctr:'20%+'},
+          {t:'多功能展示', d:'边几=床头柜=花架一物多用', ctr:'15%'},
+          {t:'DIY组装', d:'女生独自组装过程，成就感强', ctr:'互动高'}
+        ]
+      },
+      hotTags: { freq:['春季换新','卧室改造','收纳整理','小户型','实木家具'], rise:['清明出游','阳台花园','租房改造'], node:['春季装修季','3月焕新'] },
+      formula: [
+        {n:'场景+痛点+解决', p:['场景描述','具体痛点','产品解决'], ex:['「租房3年，终于找到适合小卧室的床」','「收纳不够？这个衣柜帮我多装了50件衣服」']},
+        {n:'数字+效果+对比', p:['具体数字','使用效果','前后对比'], ex:['「花2000块改造，客厅大了5㎡的感觉」','「用了30天，腰真的不疼了」']}
+      ],
+      direction: {
+        sofa:'↑场景氛围内容起量，↑材质实测建立信任，→小户型需求稳定',
+        bed:'↑卧室整体搭配爆发，↑实木工艺内容受关注，→储物功能持续需求',
+        mattress:'↑睡眠改善类内容CTR高，↑试睡政策降低决策门槛，→材质科普收藏量大',
+        cabinet:'↑定制流程展示询单转化强，↑收纳对比视觉冲击大，→环保话题关注度高',
+        light:'↑灯光氛围内容爆发，↑安装教程收藏高，→护眼功能亲子市场',
+        chair:'↑人体工学实测内容精准，↑多场景搭配种草强，→透气性夏季需求',
+        dining:'↑餐厅改造氛围感强，↑材质测试建立信任，→伸缩功能小户型刚需',
+        shelf:'↑角落改造低成本高回报，↑多功能展示实用性强，→DIY内容互动高'
+      }
+    },
+    'W15': {
+      bench: { top:{post:'4+篇/天', ctr:'17%+', cvr:'7.5%+', live:'3.2h+'}, avg:{post:'1~2篇/天', ctr:'8.5%', cvr:'3.2%', live:'1.9h'}, low:{post:'<1篇/天', ctr:'<3.8%', cvr:'<1.3%', live:'<55min'} },
+      trends: {
+        sofa: [
+          {t:'清明宅家场景', d:'小长假居家放松，沙发舒适度展示', ctr:'24%+'},
+          {t:'换沙发改造', d:'旧沙发→新沙发，客厅气质变化', ctr:'26%+'},
+          {t:'宠物友好材质', d:'猫爪布耐抓实测，养宠家庭刚需', ctr:'20%+'}
+        ],
+        bed: [
+          {t:'换季床品搭配', d:'春季浅色床品+新床架整体展示', ctr:'18%+'},
+          {t:'上下铺儿童房', d:'二胎家庭空间利用方案', ctr:'22%+'},
+          {t:'床架材质对比', d:'实木vs板材vs铁艺，优缺点分析', ctr:'15%'}
+        ],
+        mattress: [
+          {t:'腰椎保护科普', d:'不同睡姿对应床垫硬度，专业建议', ctr:'21%+'},
+          {t:'静音测试', d:'翻身不打扰伴侣，弹簧静音展示', ctr:'16%'},
+          {t:'透气性能', d:'春季潮湿，床垫透气防霉实测', ctr:'季节性'}
+        ],
+        cabinet: [
+          {t:'玄关柜设计', d:'入户第一印象，收纳+展示双重功能', ctr:'30%+'},
+          {t:'衣柜内部规划', d:'挂衣区/叠放区/抽屉科学分区', ctr:'25%+'},
+          {t:'报价透明化', d:'投影面积计算，每平米价格拆解', ctr:'询单转化强'}
+        ],
+        light: [
+          {t:'阳台灯光布置', d:'户外灯串+绿植，打造休闲角落', ctr:'28%+'},
+          {t:'无主灯设计', d:'筒灯/射灯/灯带组合，现代简约风', ctr:'22%+'},
+          {t:'智能灯具', d:'语音控制/调光调色，科技感展示', ctr:'年轻群体'}
+        ],
+        chair: [
+          {t:'阳台休闲椅', d:'户外藤椅/摇椅，清明假期氛围', ctr:'26%+'},
+          {t:'学习椅选购', d:'学生党人体工学椅，护脊功能', ctr:'20%+'},
+          {t:'餐椅搭配', d:'不同风格餐桌的椅子搭配方案', ctr:'18%'}
+        ],
+        dining: [
+          {t:'家庭聚餐场景', d:'清明家宴氛围，大餐桌实用性', ctr:'23%+'},
+          {t:'岩板餐桌优势', d:'耐高温/防刮擦/易清洁实测', ctr:'19%'},
+          {t:'折叠餐桌', d:'平时收起，聚餐展开，省空间', ctr:'小户型'}
+        ],
+        shelf: [
+          {t:'阳台花架', d:'多层花架打造阳台花园', ctr:'24%+'},
+          {t:'书架展示', d:'整墙书架营造阅读氛围', ctr:'18%'},
+          {t:'玄关置物架', d:'钥匙/包包/鞋子收纳一站式', ctr:'实用性强'}
+        ]
+      },
+      hotTags: { freq:['清明宅家','阳台改造','换季收纳','宠物友好','岩板餐桌'], rise:['户外休闲','儿童房','无主灯设计'], node:['清明小长假','春季装修'] },
+      formula: [
+        {n:'节日+场景+产品', p:['节日氛围','使用场景','产品植入'], ex:['「清明假期，终于能在新沙发上躺平了」','「小长假改造阳台，这个花架太出片」']},
+        {n:'痛点+对比+效果', p:['痛点描述','新旧对比','效果展示'], ex:['「旧沙发坐塌了，换了这个腰不酸了」','「衣柜太乱？改造后多装一倍」']}
+      ],
+      direction: {
+        sofa:'↑清明宅家场景内容爆发，↑换沙发改造对比CTR高，→宠物友好材质需求增长',
+        bed:'↑换季搭配内容起量，↑儿童房上下铺关注度高，→材质对比内容稳定',
+        mattress:'↑腰椎保护专业内容受欢迎，↑静音功能情侣市场，→透气性春季需求',
+        cabinet:'↑玄关柜设计询单转化强，↑内部规划内容收藏高，→报价透明建立信任',
+        light:'↑阳台灯光布置爆发，↑无主灯设计现代风，→智能灯具年轻市场',
+        chair:'↑阳台休闲椅清明热点，↑学习椅学生市场，→餐椅搭配整体方案',
+        dining:'↑家庭聚餐场景氛围强，↑岩板优势实测信任高，→折叠功能小户型刚需',
+        shelf:'↑阳台花架春季热点，↑书架氛围感强，→玄关架实用性高'
+      }
+    },
+    'W16': {
+      bench: { top:{post:'4+篇/天', ctr:'18%+', cvr:'8%+', live:'3.5h+'}, avg:{post:'1~2篇/天', ctr:'9%', cvr:'3.5%', live:'2h'}, low:{post:'<1篇/天', ctr:'<4%', cvr:'<1.5%', live:'<1h'} },
+      trends: {
+        sofa: [
+          {t:'到家改造对比', d:'客厅换沙发前后对比，氛围感封面', ctr:'28%+'},
+          {t:'材质触感实测', d:'绒布vs皮质vs猫爪布坐感比较', ctr:'15~22%'},
+          {t:'小户型尺寸公式', d:'60㎡/90㎡+沙发尺寸搭配', ctr:'50万+曝光'}
+        ],
+        bed: [
+          {t:'整屋卧室套装', d:'床架+床头柜+灯具一镜展示', ctr:'12%+转化'},
+          {t:'儿童/青少年房', d:'上下铺+收纳功能创意设计', ctr:'30万+曝光'},
+          {t:'安装过程vlog', d:'拆箱→安装→完成全程记录', ctr:'18%+'}
+        ],
+        mattress: [
+          {t:'睡眠痛点切入', d:'腰痛/睡不好/翻身有声音', ctr:'20%+'},
+          {t:'软硬度选购科普', d:'体重/睡姿对应软硬度图表', ctr:'收藏量大'},
+          {t:'材质拆解测评', d:'乳胶/弹簧/记忆棉剖面展示', ctr:'16%'}
+        ],
+        cabinet: [
+          {t:'工地→完工全程', d:'毛坯到精装全程记录', ctr:'32%+'},
+          {t:'报价透明化', d:'20㎡玄关柜花费拆解', ctr:'18%询单强'},
+          {t:'收纳大反差', d:'乱屋→整屋15秒视频', ctr:'80万+曝光'}
+        ],
+        light: [
+          {t:'开灯前后氛围对比', d:'同一空间关灯/开灯画面切换', ctr:'30%+'},
+          {t:'色温/亮度选购指南', d:'不同功能空间对应色温数值', ctr:'收藏高'},
+          {t:'氛围角落搭配', d:'灯串+绿植+藤编低成本方案', ctr:'22%'}
+        ],
+        chair: [
+          {t:'久坐腰痛痛点', d:'居家办公3年试8把椅子', ctr:'26%+'},
+          {t:'颜值融入家居场景', d:'椅子+书桌+绿植整体展示', ctr:'20%'},
+          {t:'多场景椅类横评', d:'餐椅/休闲椅/办公椅三类对比', ctr:'收藏转化'}
+        ],
+        dining: [
+          {t:'餐厅改造前后', d:'餐桌换新+软装调整一镜展示', ctr:'24%+'},
+          {t:'小户型伸缩/折叠方案', d:'60㎡怎么放下6人餐桌', ctr:'询单强'},
+          {t:'材质耐用性实测', d:'岩板vs实木vs亚克力防污测试', ctr:'17%'}
+        ],
+        shelf: [
+          {t:'角落改造单品', d:'一个茶几/花架改变整个角落', ctr:'22%+'},
+          {t:'多功能属性展示', d:'边几/角几兼做收纳/展示架', ctr:'转化强'},
+          {t:'组合搭配陈列', d:'架类+绿植+摆件整体出镜', ctr:'20万+曝光'}
+        ]
+      },
+      hotTags: { freq:['小户型改造','全屋定制','买家秀','沙发避坑','家居改造'], rise:['五一装修','阳台改造','新家软装','出租屋改造','设计师同款'], node:['五一黄金周（前3周蓄水期）','谷雨·春日焕新','装修旺季开启'] },
+      formula: [
+        {n:'场景痛点+数字+结果', p:['面积/预算','场景痛点','惊喜结果'], ex:['「60㎡小户型，这套沙发真的救了我的客厅！」','「3000块搞定全屋收纳，朋友来了都以为我换了新房」']},
+        {n:'专业背书+避坑结论', p:['职业年限','避坑结论','具体品类'], ex:['「做了16年家具，这3款沙发我绝对不会买」','「室内设计师选床垫从不看这个」']},
+        {n:'改造对比+情绪表达', p:['动词','具体单品','情绪感叹'], ex:['「换了这张茶几，客厅感觉大了10㎡！」','「拆掉实木床头，整个卧室气质都不一样了」']},
+        {n:'五一节点+行动号召', p:['五一/假期','装修/换新','后悔警示'], ex:['「五一前不换沙发，假期真的会后悔」','「五一装修清单 | 家具这3样一定要提前订」']}
+      ],
+      direction: {
+        sofa:'↑到家改造对比持续跑量，↑小户型尺寸指南精准拦截，→猫爪布/绒布材质热度维持',
+        bed:'↑五一前整屋套装爆发，↑儿童房精准父母圈层，→安装vlog真实感强',
+        mattress:'↑睡眠痛点CTR 20%+，↑软硬度选购收藏量大，→材质剖面测评建立信任',
+        cabinet:'↑工地完工反差CTR 32%+，↑报价透明询单转化强，→收纳反差爽感内容跑量',
+        light:'↑开灯对比CTR 30%+，↑氛围角落搭配爆量，→色温科普搜索长尾稳定',
+        chair:'↑居家办公痛点CTR 26%+，→颜值场景融合种草转向美学，→多类横评收藏稳定',
+        dining:'↑餐厅改造CTR 24%+，→小户型伸缩方案询单强，→材质耐用测试建立信任',
+        shelf:'↑角落改造CTR 22%+，→多功能演示转化强，→组合陈列氛围感曝光20万+'
+      }
+    }
+  };
+
+  let currentWeek = 'W16';
+
   function switchWeek(w) {
+    currentWeek = w;
     document.querySelectorAll('.week-btn').forEach(b => b.classList.remove('active'));
     event.target.classList.add('active');
-    document.getElementById('current-week').textContent = weekData[w].label;
-    document.getElementById('week-label').textContent = weekData[w].desc;
+    document.getElementById('current-week').textContent = weekMeta[w].label;
+    document.getElementById('week-label').textContent = weekMeta[w].desc;
+    document.querySelector('#page-trends .announce span:last-child').textContent = weekMeta[w].announce;
+    renderWeekData(w);
   }
+
+  function renderWeekData(w) {
+    const d = weekData[w];
+    // 更新基准数据
+    const benchHtml = `
+      <div class="bench-card top">
+        <div class="label">🏆 TOP商家 <span class="badge">发布量前20%</span></div>
+        <div class="metric-row"><span class="name">日均发布</span><span class="val">${d.bench.top.post}</span></div>
+        <div class="metric-row"><span class="name">商笔 CTR</span><span class="val">${d.bench.top.ctr}</span></div>
+        <div class="metric-row"><span class="name">商品转化率</span><span class="val">${d.bench.top.cvr}</span></div>
+        <div class="metric-row"><span class="name">直播场均时长</span><span class="val">${d.bench.top.live}</span></div>
+        <div class="bench-note">参考标准：沙发/床架/定制柜品类标杆店铺</div>
+      </div>
+      <div class="bench-card avg">
+        <div class="label">📊 行业均值 <span class="badge">动销商家均值</span></div>
+        <div class="metric-row"><span class="name">日均发布</span><span class="val">${d.bench.avg.post}</span></div>
+        <div class="metric-row"><span class="name">商笔 CTR</span><span class="val">${d.bench.avg.ctr}</span></div>
+        <div class="metric-row"><span class="name">商品转化率</span><span class="val">${d.bench.avg.cvr}</span></div>
+        <div class="metric-row"><span class="name">直播场均时长</span><span class="val">${d.bench.avg.live}</span></div>
+        <div class="bench-note">家具家装赛道约 1,200 家动销商家参考均值</div>
+      </div>
+      <div class="bench-card low">
+        <div class="label">⚠️ 待提升 <span class="badge">低于均值30%</span></div>
+        <div class="metric-row"><span class="name">日均发布</span><span class="val">${d.bench.low.post}</span></div>
+        <div class="metric-row"><span class="name">商笔 CTR</span><span class="val">${d.bench.low.ctr}</span></div>
+        <div class="metric-row"><span class="name">商品转化率</span><span class="val">${d.bench.low.cvr}</span></div>
+        <div class="metric-row"><span class="name">直播场均时长</span><span class="val">${d.bench.low.live}</span></div>
+        <div class="bench-note">重点关注对象，需 AM 主动介入诊断</div>
+      </div>
+    `;
+    document.getElementById('bench-grid').innerHTML = benchHtml;
+
+    // 更新品类风向
+    const catMap = {sofa:'沙发',bed:'床',mattress:'床垫',cabinet:'柜类',light:'灯具',chair:'坐具/椅子',dining:'餐桌椅',shelf:'几类/架类'};
+    const catSub = {sofa:'客厅主角，高客单决策周期长',bed:'五一装修季爆发，套装客单高',mattress:'睡眠经济强需求，复购/升级消费',cabinet:'定制柜/成品柜，高利润高询单',light:'氛围感强，冲动消费高频品类',chair:'人体工学+颜值双驱动，居家办公需求强',dining:'套装高客单，家庭用餐场景强需求',shelf:'低客单高频，装饰与收纳双属性'};
+    const trendHtml = Object.keys(d.trends).map(cat => {
+      const items = d.trends[cat];
+      return `
+        <div class="trend-card" data-cat="${cat}">
+          <div class="cat-header">
+            <span class="cat-icon">${cat==='sofa'?'🛋️':cat==='bed'?'🛏️':cat==='mattress'?'💤':cat==='cabinet'?'🗄️':cat==='light'?'💡':cat==='chair'?'🪑':cat==='dining'?'🍽️':'🪞'}</span>
+            <div>
+              <div class="cat-name">${catMap[cat]}</div>
+              <div class="cat-sub">${catSub[cat]}</div>
+            </div>
+          </div>
+          ${items.map((it,i) => `
+            <div class="trend-item">
+              <span class="num">${i+1}</span>
+              <div class="content"><strong>${it.t}</strong>：${it.d}，
+                ${it.ctr.includes('CTR')||it.ctr.includes('曝光')||it.ctr.includes('转化')?`<span class="ctr-tag">${it.ctr}</span>`:it.ctr}</div>
+            </div>
+          `).join('')}
+          <div class="trend-focus">🎯 重点关注：${d.direction[cat].split('，')[0].replace(/[↑→]/g,'').trim()}</div>
+        </div>
+      `;
+    }).join('');
+    document.getElementById('trend-container').innerHTML = trendHtml;
+
+    // 更新标题公式
+    const formulaHtml = d.formula.map((f,i) => `
+      <div class="formula-card">
+        <div class="f-header">
+          <span class="f-num">0${i+1}</span>
+          <span class="f-title">${f.n}</span>
+        </div>
+        <div class="formula-parts">
+          ${f.p.map((p,pi) => `<span class="part">${p}</span>${pi<f.p.length-1?'<span class="plus">+</span>':''}`).join('')}
+        </div>
+        <div class="formula-examples">
+          ${f.ex.map(e => `<span>${e}</span>`).join('')}
+        </div>
+      </div>
+    `).join('');
+    document.getElementById('formula-list').innerHTML = formulaHtml;
+
+    // 更新热点话题
+    const hotHtml = `
+      <div class="topic-block">
+        <div class="t-label">高频标题词</div>
+        <div class="tags-wrap">
+          ${d.hotTags.freq.map(t => `<span class="topic-tag hot">#${t}</span>`).join('')}
+        </div>
+      </div>
+      <div class="topic-block">
+        <div class="t-label">上升场景词</div>
+        <div class="tags-wrap">
+          ${d.hotTags.rise.map(t => `<span class="topic-tag rise">#${t}</span>`).join('')}
+        </div>
+      </div>
+      <div class="topic-block">
+        <div class="t-label">本周节点</div>
+        <div class="tags-wrap">
+          ${d.hotTags.node.map(t => `<span class="topic-tag node">#${t}</span>`).join('')}
+        </div>
+      </div>
+    `;
+    document.getElementById('topic-card').innerHTML = hotHtml;
+
+    // 更新品类方向
+    const dirMap = {sofa:'🛋️',bed:'🛏️',mattress:'💤',cabinet:'🗄️',light:'💡',chair:'🪑',dining:'🍽️',shelf:'🪞'};
+    const dirHtml = Object.keys(d.direction).map(cat => `
+      <div class="dir-card">
+        <div class="d-header">
+          <span class="d-icon">${dirMap[cat]}</span>
+          <span class="d-name">${catMap[cat]}</span>
+        </div>
+        ${d.direction[cat].split('，').map(item => {
+          const arrow = item.includes('↑')?'up':item.includes('↓')?'down':'flat';
+          const text = item.replace(/[↑→↓]/g,'').trim();
+          return `<div class="dir-item"><span class="arrow ${arrow}">${arrow==='up'?'↑':arrow==='down'?'↓':'→'}</span><span>${text}</span></div>`;
+        }).join('')}
+        <div class="dir-focus">✅ 重点关注：${d.direction[cat].split('，')[0].replace(/[↑→]/g,'').trim()}</div>
+      </div>
+    `).join('') + `
+      <div class="dir-card" style="grid-column: span 2;">
+        <div class="d-header">
+          <span class="d-icon">⚠️</span>
+          <span class="d-name">合规提醒（全品类）</span>
+        </div>
+        <div class="dir-item"><span class="arrow down">↓</span><span>「最环保」「第一」等极限词笔记本周处罚案例增多</span></div>
+        <div class="dir-item"><span class="arrow down">↓</span><span>无资质宣称「甲醛检测达标」类内容存在下架风险</span></div>
+        <div class="dir-item"><span class="arrow flat">→</span><span>建议改用「实测低醛」「附第三方检测报告」等合规表达</span></div>
+        <div class="dir-focus" style="background:#fff0f2; color: var(--red);">⚠️ 合规红线：极限词 + 无资质检测宣称</div>
+      </div>
+    `;
+    document.getElementById('dir-grid').innerHTML = dirHtml;
+  }
+
+  // 初始化渲染
+  document.addEventListener('DOMContentLoaded', () => {
+    renderWeekData(currentWeek);
+  });
 
   // ── Category filter ──
   function filterCat(cat) {
