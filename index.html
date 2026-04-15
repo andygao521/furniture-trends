@@ -1151,10 +1151,8 @@
     document.getElementById('dir-grid').innerHTML = dirHtml;
   }
 
-  // 初始化渲染
-  document.addEventListener('DOMContentLoaded', () => {
-    renderWeekData(currentWeek);
-  });
+  // 初始化渲染（放在body末尾，DOM已就绪，无需等DOMContentLoaded）
+  renderWeekData(currentWeek);
 
   // ── Category filter ──
   function filterCat(cat) {
