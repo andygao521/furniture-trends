@@ -663,7 +663,7 @@
 <div class="main">
 
   <!-- Announce -->
-  <div class="announce">
+  <div class="announce" id="week-announce">
     <span class="icon">💡</span>
     <span>五一黄金周前 3 周内容布局期，建议本周集中测试"家装改造场景"和"买手开箱"内容，抢占五一家居消费心智。</span>
   </div>
@@ -1019,7 +1019,7 @@
     event.target.classList.add('active');
     document.getElementById('current-week').textContent = weekMeta[w].label;
     document.getElementById('week-label').textContent = weekMeta[w].desc;
-    document.querySelector('#page-trends .announce span:last-child').textContent = weekMeta[w].announce;
+    document.querySelector('#week-announce span:last-child').textContent = weekMeta[w].announce;
     renderWeekData(w);
   }
 
