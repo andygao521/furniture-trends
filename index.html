@@ -1015,8 +1015,10 @@
 
   function switchWeek(w) {
     currentWeek = w;
-    document.querySelectorAll('.week-btn').forEach(b => b.classList.remove('active'));
-    event.target.classList.add('active');
+    document.querySelectorAll('.week-btn').forEach(b => {
+      b.classList.remove('active');
+      if (b.textContent.includes(w)) b.classList.add('active');
+    });
     document.getElementById('current-week').textContent = weekMeta[w].label;
     document.getElementById('week-label').textContent = weekMeta[w].desc;
     document.querySelector('#week-announce span:last-child').textContent = weekMeta[w].announce;
