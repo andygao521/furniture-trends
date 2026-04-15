@@ -55,6 +55,35 @@
       font-size: 12px;
     }
 
+    /* ── Main Tab ── */
+    .main-tab-bar {
+      display: flex;
+      background: white;
+      border-bottom: 2px solid #f0f0f0;
+      position: sticky; top: 0; z-index: 20;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .main-tab {
+      flex: 1;
+      padding: 14px 0;
+      text-align: center;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--gray-3);
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all .2s;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .main-tab.active {
+      color: var(--red);
+      border-bottom-color: var(--red);
+    }
+
+    /* ── Pages ── */
+    .page { display: none; }
+    .page.active { display: block; }
+
     /* ── Week nav ── */
     .week-bar {
       display: flex;
@@ -353,6 +382,206 @@
       padding: 4px 8px;
     }
 
+    /* ── Tool page ── */
+    .tool-wrap { max-width: 760px; margin: 0 auto; padding: 16px 12px 40px; }
+
+    .tool-hero {
+      background: linear-gradient(135deg, #fff0f2, #fff8f0);
+      border: 1px solid var(--red-mid);
+      border-radius: var(--radius);
+      padding: 20px 20px 16px;
+      margin-bottom: 20px;
+      display: flex; align-items: flex-start; gap: 14px;
+    }
+    .tool-hero .icon { font-size: 32px; flex-shrink: 0; }
+    .tool-hero h2 { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+    .tool-hero p  { font-size: 13px; color: var(--gray-3); }
+
+    .form-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+    }
+    .form-row { margin-bottom: 16px; }
+    .form-row label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gray-1);
+      margin-bottom: 6px;
+    }
+    .form-row label .req { color: var(--red); margin-left: 2px; }
+    .form-row label .opt { color: var(--gray-3); font-weight: 400; font-size: 12px; margin-left: 4px; }
+    .form-row input,
+    .form-row select,
+    .form-row textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--gray-4);
+      border-radius: 8px;
+      font-size: 14px;
+      color: var(--gray-1);
+      background: white;
+      transition: border .2s;
+      font-family: inherit;
+      outline: none;
+    }
+    .form-row input:focus,
+    .form-row select:focus,
+    .form-row textarea:focus { border-color: var(--red); }
+    .form-row textarea { resize: vertical; min-height: 72px; }
+    .form-row .hint { font-size: 11px; color: var(--gray-3); margin-top: 4px; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media(max-width: 520px) { .form-grid { grid-template-columns: 1fr; } }
+
+    .gen-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--red), #ff6b35);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: .5px;
+      transition: opacity .2s;
+    }
+    .gen-btn:hover { opacity: .9; }
+    .gen-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+    /* Result area */
+    .result-area {
+      display: none;
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-top: 20px;
+    }
+    .result-area.show { display: block; }
+    .result-header {
+      background: linear-gradient(135deg, var(--red), #ff6b35);
+      color: white;
+      padding: 14px 20px;
+      font-size: 15px;
+      font-weight: 700;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .result-body { padding: 20px; }
+
+    .result-section { margin-bottom: 22px; }
+    .result-section h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--red);
+      margin-bottom: 10px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .result-section h3::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--red-mid);
+    }
+
+    .title-list { display: flex; flex-direction: column; gap: 8px; }
+    .title-item {
+      background: var(--gray-5);
+      border-left: 3px solid var(--red);
+      border-radius: 0 8px 8px 0;
+      padding: 10px 12px;
+      font-size: 14px;
+      color: var(--gray-1);
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .title-item .t-num {
+      width: 20px; height: 20px;
+      background: var(--red);
+      color: white;
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .title-item .t-text { flex: 1; }
+    .title-item .copy-btn {
+      font-size: 11px;
+      color: var(--gray-3);
+      cursor: pointer;
+      padding: 2px 6px;
+      border: 1px solid var(--gray-4);
+      border-radius: 4px;
+      background: white;
+      flex-shrink: 0;
+      transition: all .15s;
+    }
+    .title-item .copy-btn:hover { border-color: var(--red); color: var(--red); }
+
+    .cover-tips { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    @media(max-width:480px) { .cover-tips { grid-template-columns: 1fr; } }
+    .cover-tip {
+      background: var(--red-light);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 13px;
+    }
+    .cover-tip strong { color: var(--red); font-size: 12px; display: block; margin-bottom: 3px; }
+
+    .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
+    .result-tag {
+      background: var(--gray-5);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 12px;
+      color: var(--gray-2);
+      border: 1px solid var(--gray-4);
+    }
+
+    .action-row {
+      display: flex; gap: 10px; margin-top: 16px;
+    }
+    .action-btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--gray-4);
+      background: white;
+      color: var(--gray-2);
+      transition: all .2s;
+    }
+    .action-btn.primary {
+      background: var(--red);
+      border-color: var(--red);
+      color: white;
+    }
+    .action-btn:hover { opacity: .85; }
+
+    .loading-mask {
+      display: none;
+      text-align: center;
+      padding: 32px;
+      color: var(--gray-3);
+      font-size: 14px;
+    }
+    .loading-mask.show { display: block; }
+    .spinner {
+      width: 32px; height: 32px;
+      border: 3px solid var(--red-mid);
+      border-top-color: var(--red);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      margin: 0 auto 12px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
     /* ── Footer ── */
     .footer {
       text-align: center;
@@ -411,6 +640,15 @@
     <span class="tag" id="week-label">W16 · 04.07—04.13</span>
   </div>
 </div>
+
+<!-- Main Tab Bar -->
+<div class="main-tab-bar">
+  <div class="main-tab active" onclick="switchMainTab('trends', this)">📊 趋势看板</div>
+  <div class="main-tab" onclick="switchMainTab('tools', this)">🛠️ 实用工具</div>
+</div>
+
+<!-- ═══ Page: 趋势看板 ═══ -->
+<div class="page active" id="page-trends">
 
 <!-- Week nav -->
 <div class="week-bar">
@@ -916,13 +1154,108 @@
 
 </div><!-- end main -->
 
+</div><!-- end page-trends -->
+
+<!-- ═══ Page: 实用工具 ═══ -->
+<div class="page" id="page-tools">
+  <div class="tool-wrap">
+
+    <div class="tool-hero">
+      <div class="icon">✨</div>
+      <div>
+        <h2>笔记策划工具</h2>
+        <p>基于本周家具家装行业风向，输入你的产品信息，一键生成可直接使用的内容策划方案</p>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="form-row">
+        <label>产品名称 <span class="req">*</span></label>
+        <input type="text" id="f-product" placeholder="例：猫爪布三人沙发、实木儿童上下床、岩板伸缩餐桌" />
+      </div>
+      <div class="form-grid">
+        <div class="form-row">
+          <label>品类 <span class="req">*</span></label>
+          <select id="f-cat">
+            <option value="">请选择品类</option>
+            <option value="sofa">🛋️ 沙发</option>
+            <option value="bed">🛏️ 床</option>
+            <option value="mattress">💤 床垫</option>
+            <option value="cabinet">🗄️ 柜类</option>
+            <option value="light">💡 灯具</option>
+            <option value="chair">🪑 坐具/椅子</option>
+            <option value="dining">🍽️ 餐桌椅</option>
+            <option value="shelf">🪞 几类/架类</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>价格区间 <span class="opt">（选填）</span></label>
+          <select id="f-price">
+            <option value="">不限</option>
+            <option value="low">低客单（500元以下）</option>
+            <option value="mid">中客单（500-3000元）</option>
+            <option value="high">高客单（3000元以上）</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <label>核心卖点 <span class="opt">（选填）</span></label>
+        <input type="text" id="f-usp" placeholder="例：猫爪布耐抓、全实木榫卯结构、岩板防污耐高温、人体工学护腰" />
+      </div>
+      <div class="form-grid">
+        <div class="form-row">
+          <label>目标人群 <span class="opt">（选填）</span></label>
+          <input type="text" id="f-target" placeholder="例：小户型租房、新婚夫妇、有猫家庭" />
+        </div>
+        <div class="form-row">
+          <label>内容方向 <span class="opt">（选填）</span></label>
+          <select id="f-style">
+            <option value="all">不限</option>
+            <option value="scene">场景氛围感</option>
+            <option value="compare">改造前后对比</option>
+            <option value="edu">选购科普/避坑</option>
+            <option value="story">主理人故事</option>
+            <option value="node">五一节点借势</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <label>补充说明 <span class="opt">（选填）</span></label>
+        <textarea id="f-extra" placeholder="例：产业带直发、有专利认证、近期新出了新配色、主推五一促销款…"></textarea>
+      </div>
+      <button class="gen-btn" onclick="generatePlan()">✨ 一键生成内容策划方案</button>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading-mask" id="loading">
+      <div class="spinner"></div>
+      <div>正在结合本周风向生成策划方案…</div>
+    </div>
+
+    <!-- Result -->
+    <div class="result-area" id="result-area">
+      <div class="result-header">🎯 <span id="result-title">内容策划方案</span></div>
+      <div class="result-body" id="result-body"></div>
+    </div>
+
+  </div>
+</div><!-- end page-tools -->
+
 <div class="footer">
   家具家装行业风向看板 · 小红书电商 · 交易部八部<br>
   数据基于行业动销商家笔记表现提炼 · 每周更新 · 仅供内部参考
 </div>
 
 <script>
-  // Week switcher (展示用)
+  // ── Main Tab ──
+  function switchMainTab(tab, el) {
+    document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + tab).classList.add('active');
+  }
+
+  // ── Week switcher ──
   const weekData = {
     'W14': { label: 'W14 · 2026.03.24—03.30', desc: 'W14 · 03.24—03.30' },
     'W15': { label: 'W15 · 2026.03.31—04.06', desc: 'W15 · 03.31—04.06' },
@@ -935,7 +1268,7 @@
     document.getElementById('week-label').textContent = weekData[w].desc;
   }
 
-  // Category filter
+  // ── Category filter ──
   function filterCat(cat) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     event.target.classList.add('active');
@@ -947,6 +1280,315 @@
         card.style.display = 'none';
       }
     });
+  }
+
+  // ── 笔记策划生成 ──
+  const catMap = {
+    sofa:     { name: '沙发', icon: '🛋️' },
+    bed:      { name: '床', icon: '🛏️' },
+    mattress: { name: '床垫', icon: '💤' },
+    cabinet:  { name: '柜类', icon: '🗄️' },
+    light:    { name: '灯具', icon: '💡' },
+    chair:    { name: '坐具/椅子', icon: '🪑' },
+    dining:   { name: '餐桌椅', icon: '🍽️' },
+    shelf:    { name: '几类/架类', icon: '🪞' },
+  };
+
+  // 每个品类对应的本周爆款逻辑
+  const catTrend = {
+    sofa:     { hook: '换了一张沙发，客厅像换了个家', angle: '到家改造前后对比', ctr: '28%+' },
+    bed:      { hook: '换了这张床，卧室整个不一样了', angle: '整屋卧室套装种草', ctr: '18%+' },
+    mattress: { hook: '换了这张床垫，睡了3年腰痛终于好了', angle: '睡眠痛点切入', ctr: '20%+' },
+    cabinet:  { hook: '我家玄关柜这样做，进门就不一样了', angle: '工地完工全程记录', ctr: '32%+' },
+    light:    { hook: '换了这盏灯，家里像换了个人', angle: '开灯前后氛围对比', ctr: '30%+' },
+    chair:    { hook: '居家办公3年，我试了8把椅子', angle: '腰痛痛点+专业实测', ctr: '26%+' },
+    dining:   { hook: '换了张餐桌，我开始爱上在家吃饭了', angle: '餐厅改造前后对比', ctr: '24%+' },
+    shelf:    { hook: '花300块这个角落成了我家最好看的地方', angle: '角落低成本改造', ctr: '22%+' },
+  };
+
+  const styleMap = {
+    all:     '综合（场景+科普+对比）',
+    scene:   '场景氛围感',
+    compare: '改造前后对比',
+    edu:     '选购科普/避坑',
+    story:   '主理人故事',
+    node:    '五一节点借势',
+  };
+
+  const formulaByStyle = {
+    scene:   ['面积/预算数字 + 改造场景 + 惊喜结果', '情绪感叹 + 单品名 + 氛围关键词'],
+    compare: ['动词（换/加/拆）+ 具体单品 + 情绪感叹', '改造前痛点 + 改造后结果 + 感叹号'],
+    edu:     ['专业年限/身份 + 不会买/后悔 + 具体品类', '选购清单 + 避坑关键词 + 人群标签'],
+    story:   ['主理人视角 + 真实经历 + 感恩/爆单', '品牌故事 + 产地/工艺 + 信任背书'],
+    node:    ['五一/装修季 + 不换后悔警示 + 行动号召', '节日清单 + 提前订 + 限时利益点'],
+    all:     ['面积/预算 + 场景痛点 + 惊喜结果', '专业背书 + 避坑结论', '改造前后 + 情绪感叹', '五一节点 + 行动号召'],
+  };
+
+  function generatePlan() {
+    const product = document.getElementById('f-product').value.trim();
+    const cat     = document.getElementById('f-cat').value;
+    const price   = document.getElementById('f-price').value;
+    const usp     = document.getElementById('f-usp').value.trim();
+    const target  = document.getElementById('f-target').value.trim();
+    const style   = document.getElementById('f-style').value;
+    const extra   = document.getElementById('f-extra').value.trim();
+
+    if (!product) { alert('请填写产品名称'); return; }
+    if (!cat)     { alert('请选择品类'); return; }
+
+    const btn = document.querySelector('.gen-btn');
+    btn.disabled = true;
+    document.getElementById('loading').classList.add('show');
+    document.getElementById('result-area').classList.remove('show');
+
+    setTimeout(() => {
+      btn.disabled = false;
+      document.getElementById('loading').classList.remove('show');
+      renderResult(product, cat, price, usp, target, style, extra);
+    }, 1200);
+  }
+
+  function renderResult(product, cat, price, usp, target, style, extra) {
+    const ci = catMap[cat];
+    const trend = catTrend[cat];
+    const formulas = formulaByStyle[style] || formulaByStyle['all'];
+
+    // 生成标题
+    const uspText = usp || '高品质工艺';
+    const targetText = target || '家居爱好者';
+    const priceLabel = { low:'低价入手', mid:'', high:'高端品质' }[price] || '';
+
+    const titles = buildTitles(product, cat, usp, target, style, price, extra, trend);
+    const coverTips = buildCoverTips(cat, style, trend);
+    const tags = buildTags(cat, target, style, extra);
+    const contentAngles = buildAngles(product, cat, usp, target, style, extra, trend);
+
+    document.getElementById('result-title').textContent = `${ci.icon} ${product} · 内容策划方案`;
+
+    document.getElementById('result-body').innerHTML = `
+      <!-- 本周风向匹配 -->
+      <div class="result-section">
+        <h3>📌 本周风向匹配</h3>
+        <div class="announce" style="margin:0;">
+          <span class="icon">🔥</span>
+          <span>本周<strong>${ci.name}</strong>品类最强内容方向：<strong>${trend.angle}</strong>，参考 CTR <strong>${trend.ctr}</strong>。
+          建议以「${trend.hook}」为内容锚点，结合你的产品展开。</span>
+        </div>
+      </div>
+
+      <!-- 标题方案 -->
+      <div class="result-section">
+        <h3>✍️ 标题方案（5条）</h3>
+        <div class="title-list">
+          ${titles.map((t,i) => `
+            <div class="title-item">
+              <span class="t-num">${i+1}</span>
+              <span class="t-text">${t}</span>
+              <button class="copy-btn" onclick="copyText('${t.replace(/'/g,"\\'")}', this)">复制</button>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- 封面建议 -->
+      <div class="result-section">
+        <h3>🖼️ 封面拍摄建议</h3>
+        <div class="cover-tips">
+          ${coverTips.map(c => `
+            <div class="cover-tip">
+              <strong>${c.label}</strong>
+              ${c.desc}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- 内容角度 -->
+      <div class="result-section">
+        <h3>🎬 内容脚本方向</h3>
+        <div class="title-list">
+          ${contentAngles.map((a,i) => `
+            <div class="title-item">
+              <span class="t-num">${i+1}</span>
+              <span class="t-text">${a}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- 推荐话题标签 -->
+      <div class="result-section">
+        <h3>🏷️ 推荐话题标签</h3>
+        <div class="tag-cloud">
+          ${tags.map(t => `<span class="result-tag">#${t}</span>`).join('')}
+        </div>
+      </div>
+
+      <!-- 发布建议 -->
+      <div class="result-section">
+        <h3>📅 发布节奏建议</h3>
+        <div class="announce" style="margin:0; background:#f0fff4; border-color:#b2dfdb; color:#1b5e20;">
+          <span class="icon">💡</span>
+          <span>五一前 3 周（现在）是<strong>黄金蓄水期</strong>，建议本周发布 <strong>2-3 条</strong>测试内容，
+          选 CTR 最高的加投 DOU+；五一前 1 周集中发「冲单款」，搭配活动利益点。
+          每天发布时间建议：<strong>午休 12-13 点</strong> 或 <strong>晚间 20-22 点</strong>。</span>
+        </div>
+      </div>
+
+      <div class="action-row">
+        <button class="action-btn" onclick="copyAllTitles()">📋 复制全部标题</button>
+        <button class="action-btn primary" onclick="resetForm()">🔄 重新生成</button>
+      </div>
+    `;
+
+    document.getElementById('result-area').classList.add('show');
+    document.getElementById('result-area').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function buildTitles(product, cat, usp, target, style, price, extra, trend) {
+    const u = usp || '品质好货';
+    const t = target || '家居党';
+    const p = product;
+    const hook = trend.hook;
+    const titles = [];
+
+    // 通用改造对比型
+    titles.push(`换了这款${p}，${hook.split('，')[1] || '整个空间都不一样了'}！`);
+
+    // 人群痛点型
+    if (target) {
+      titles.push(`${t}注意！选${p.replace(/[^\u4e00-\u9fa5]/g,'')||p}之前先看这条`);
+    } else {
+      titles.push(`买${p}被坑3次后，我总结了这份选购清单`);
+    }
+
+    // 数字/专业型
+    if (usp) {
+      titles.push(`${u}的${p}，我用了半年后说实话`);
+    } else {
+      titles.push(`做了16年家具，这款${p}是我见过性价比最高的`);
+    }
+
+    // 五一节点型
+    titles.push(`五一装修必看｜${p}这样选，进场不踩坑`);
+
+    // 场景氛围型
+    titles.push(`花${price==='low'?'几百块':price==='high'?'有点贵但值得':'+一点预算'}入手这款${p}，家里朋友来了都问哪买的`);
+
+    return titles;
+  }
+
+  function buildCoverTips(cat, style, trend) {
+    const tips = {
+      sofa:     [
+        { label: '📸 主拍角度', desc: '客厅45°斜角俯拍，沙发+地毯+茶几入画，自然光或暖灯氛围' },
+        { label: '🎨 色彩建议', desc: '背景选浅色墙面/木色，突出沙发主色，避免杂乱背景' },
+        { label: '✂️ 封面文字', desc: '叠加面积标注（如「60㎡客厅」）或材质标签（「猫爪布」）' },
+        { label: '🎬 视频封面', desc: '取改造前后对比定格画面，左右分屏或上下滑动揭晓效果最佳' },
+      ],
+      bed:      [
+        { label: '📸 主拍角度', desc: '床铺正对面平拍或微俯角，床品整理整洁，加床头灯暖光' },
+        { label: '🎨 色彩建议', desc: '床品选白/米/灰系，与床框形成层次感，避免花哨图案' },
+        { label: '✂️ 封面文字', desc: '标注卧室面积或「整屋套装」「亲子房」等场景关键词' },
+        { label: '🎬 视频封面', desc: '取安装完成后整屋全景，或床品铺好后的氛围特写' },
+      ],
+      mattress: [
+        { label: '📸 主拍角度', desc: '床垫剖面展示（拍侧面结构）或人躺上去的真实状态' },
+        { label: '🎨 色彩建议', desc: '白色/浅灰床品搭配，突出床垫质感，打侧光体现厚度' },
+        { label: '✂️ 封面文字', desc: '标注硬度数值或「护腰」「防螨」等功效关键词' },
+        { label: '🎬 视频封面', desc: '取压力测试瞬间（放重物/手压回弹）或入睡场景定格' },
+      ],
+      cabinet:  [
+        { label: '📸 主拍角度', desc: '柜体正面全景+局部细节两张，展示工艺和内部收纳' },
+        { label: '🎨 色彩建议', desc: '拍摄时背景收拾干净，突出柜体颜色和纹理，加辅助光' },
+        { label: '✂️ 封面文字', desc: '叠加「XX㎡玄关/书房/卧室」+报价范围，提升点击欲望' },
+        { label: '🎬 视频封面', desc: '取工地完工最终揭晓定格，或收纳前后大反差画面' },
+      ],
+      light:    [
+        { label: '📸 主拍角度', desc: '关灯/开灯两张对比，开灯状态用相机测光模式拍暖光氛围' },
+        { label: '🎨 色彩建议', desc: '夜间或窗帘遮光拍摄，充分展现灯光颜色和投影效果' },
+        { label: '✂️ 封面文字', desc: '标注色温数值（如「3000K暖光」）或场景（「卧室/客厅/餐厅」）' },
+        { label: '🎬 视频封面', desc: '取开灯瞬间的动态画面，或氛围角落全景定格' },
+      ],
+      chair:    [
+        { label: '📸 主拍角度', desc: '椅子45°侧角展示轮廓，再拍一张人坐在上面的真实状态' },
+        { label: '🎨 色彩建议', desc: '书桌/工作台背景，植物点缀，自然光或桌面台灯辅助' },
+        { label: '✂️ 封面文字', desc: '标注「久坐不腰痛」「居家办公」或人群标签' },
+        { label: '🎬 视频封面', desc: '取调节扶手/靠背的操作过程，或久坐场景定格' },
+      ],
+      dining:   [
+        { label: '📸 主拍角度', desc: '餐桌俯拍（放餐具+绿植做布景）或斜角拍餐厅整体氛围' },
+        { label: '🎨 色彩建议', desc: '暖色灯光+浅色墙面，餐桌布景不要太满，留白体现质感' },
+        { label: '✂️ 封面文字', desc: '标注可伸缩/几人座或「小户型也放得下」等实用关键词' },
+        { label: '🎬 视频封面', desc: '取伸缩演示瞬间，或餐厅改造揭晓定格' },
+      ],
+      shelf:    [
+        { label: '📸 主拍角度', desc: '架/几整体+局部两张，搭配绿植/书籍/摆件做布景' },
+        { label: '🎨 色彩建议', desc: '背景选素色墙，搭配物品控制在3种颜色内，避免视觉杂乱' },
+        { label: '✂️ 封面文字', desc: '标注「角落改造」「收纳神器」或低价亮点（「299入手」）' },
+        { label: '🎬 视频封面', desc: '取角落改造前后对比定格，或摆件整理过程结尾画面' },
+      ],
+    };
+    return tips[cat] || tips['shelf'];
+  }
+
+  function buildAngles(product, cat, usp, target, style, extra, trend) {
+    const u = usp || '';
+    const t = target || '普通用户';
+    const p = product;
+    const angles = [];
+
+    angles.push(`【改造对比】拍摄使用前后空间对比，开头3秒展示「改造前」痛点画面，迅速切换改造后效果，文案用「${trend.hook}」作为第一句话引入产品`);
+
+    if (u) {
+      angles.push(`【卖点实测】重点展示「${u}」，设计一个日常使用场景实测（如实际使用、极限测试、与竞品对比），让卖点可见化而非文字说明`);
+    } else {
+      angles.push(`【主理人视角】以品牌/主理人身份出镜，讲述选品/生产背后的故事，用「做了这么多年家具，这款是我最满意的」作为信任锚点`);
+    }
+
+    angles.push(`【选购避坑】以「买${p}之前，这3个坑你不能踩」为框架，从材质/尺寸/价格三个维度给出专业判断，结尾自然引出自家产品如何规避这些问题`);
+
+    angles.push(`【五一借势】结合五一装修旺季，以「五一装修清单｜${p}这样选」为主题，包含节前下单发货时效说明，制造决策紧迫感`);
+
+    return angles;
+  }
+
+  function buildTags(cat, target, style, extra) {
+    const base = {
+      sofa:     ['沙发推荐','客厅改造','沙发选购','小户型沙发','猫爪布沙发'],
+      bed:      ['卧室改造','床架推荐','整屋卧室','儿童房','床的选购'],
+      mattress: ['床垫推荐','睡眠质量','腰椎护理','床垫选购','软硬床垫'],
+      cabinet:  ['全屋定制','玄关柜','衣柜设计','收纳改造','定制柜报价'],
+      light:    ['灯具推荐','氛围灯','客厅灯','卧室灯光','灯具选购'],
+      chair:    ['椅子推荐','人体工学椅','居家办公','餐椅选购','久坐不腰痛'],
+      dining:   ['餐桌推荐','餐厅改造','岩板餐桌','伸缩餐桌','餐桌椅套装'],
+      shelf:    ['角落改造','展示架','边几推荐','收纳架','家居好物'],
+    }[cat] || [];
+
+    const extra_tags = ['家具选购','家居改造','小红书好物','五一装修','家装灵感'];
+    const target_tags = target ? [target.replace(/[，,、]/g,'').substring(0,10)] : [];
+
+    return [...base.slice(0,4), ...target_tags, ...extra_tags.slice(0,3)];
+  }
+
+  // 复制功能
+  function copyText(text, btn) {
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✅ 已复制';
+      setTimeout(() => { btn.textContent = '复制'; }, 2000);
+    });
+  }
+
+  function copyAllTitles() {
+    const titles = [...document.querySelectorAll('.title-item .t-text')].map(el => el.textContent).join('\n');
+    navigator.clipboard.writeText(titles).then(() => {
+      alert('✅ 已复制全部标题到剪贴板');
+    });
+  }
+
+  function resetForm() {
+    document.getElementById('result-area').classList.remove('show');
+    document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth' });
   }
 </script>
 </body>
