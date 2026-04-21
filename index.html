@@ -646,6 +646,7 @@
   <div class="main-tab active" onclick="switchMainTab('trends', this)">📊 趋势看板</div>
   <div class="main-tab" onclick="switchMainTab('tools', this)">🛠️ 实用工具</div>
   <div class="main-tab" onclick="switchMainTab('diag', this)">🔍 账号诊断</div>
+  <div class="main-tab" onclick="switchMainTab('audit', this)">⚠️ 违规预审</div>
 </div>
 
 <!-- ═══ Page: 趋势看板 ═══ -->
@@ -889,6 +890,43 @@
 
   </div>
 </div><!-- end page-diag -->
+
+<!-- ═══ Page: 违规预审 ═══ -->
+<div class="page" id="page-audit">
+  <div class="tool-wrap">
+
+    <div class="tool-hero">
+      <div class="icon">⚠️</div>
+      <div>
+        <h2>笔记违规预审</h2>
+        <p>发布前粘贴标题和正文，自动检测家居家装行业高风险违规词，给出修改建议</p>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="form-row">
+        <label>笔记标题 <span class="req">*</span></label>
+        <input type="text" id="a-title" placeholder="粘贴你的笔记标题" />
+      </div>
+      <div class="form-row">
+        <label>笔记正文 <span class="opt">（选填，检测更全面）</span></label>
+        <textarea id="a-body" style="min-height:120px;" placeholder="粘贴笔记正文内容"></textarea>
+      </div>
+      <button class="gen-btn" onclick="runAudit()">⚠️ 立即检测违规风险</button>
+    </div>
+
+    <div class="loading-mask" id="audit-loading">
+      <div class="spinner"></div>
+      <div>正在检测违规词…</div>
+    </div>
+
+    <div class="result-area" id="audit-result">
+      <div class="result-header" id="audit-result-header">📋 检测报告</div>
+      <div class="result-body" id="audit-result-body"></div>
+    </div>
+
+  </div>
+</div><!-- end page-audit -->
 
 <div class="footer">
   家具家装行业风向看板 · 小红书电商 · 行业三部-七组（家具）<br>
@@ -1143,6 +1181,257 @@
     }
 
     return suggestions.slice(0, 5);
+  }
+
+  // ═══ 违规预审 ═══
+
+  // 违规词库：家居家装行业专用
+  // 格式：{ word, level: 'danger'|'warn', reason, fix }
+  const AUDIT_RULES = [
+    // ── 极限词/绝对化（danger）──
+    { word:'最好', level:'danger', reason:'极限词，平台直接限流', fix:'可改为「口碑不错」「用户好评率高」' },
+    { word:'最佳', level:'danger', reason:'极限词，平台直接限流', fix:'可改为「表现优秀」「综合评分高」' },
+    { word:'第一', level:'danger', reason:'极限词，无法证实排名', fix:'删除或改为「行业知名」' },
+    { word:'顶级', level:'danger', reason:'极限词', fix:'可改为「高品质」「工艺精良」' },
+    { word:'极致', level:'danger', reason:'极限词', fix:'描述具体卖点替代，如「0.1mm精度工艺」' },
+    { word:'无敌', level:'danger', reason:'极限词', fix:'删除，改用具体功效描述' },
+    { word:'完美', level:'danger', reason:'极限词', fix:'可改为「细节到位」「工艺精细」' },
+    { word:'史上最', level:'danger', reason:'极限词', fix:'删除该表述' },
+    { word:'全网最', level:'danger', reason:'极限词，无法证实', fix:'删除' },
+    { word:'全国最', level:'danger', reason:'极限词，无法证实', fix:'删除' },
+    { word:'最低价', level:'danger', reason:'极限词，价格类绝对化', fix:'改为「活动特惠价」「限时优惠」' },
+    { word:'最便宜', level:'danger', reason:'极限词', fix:'改为「同品质性价比高」' },
+    { word:'永不褪色', level:'danger', reason:'绝对化质量承诺，禁止使用', fix:'改为「色牢度高，经检测达到X级标准」' },
+    { word:'永不变形', level:'danger', reason:'绝对化质量承诺，禁止使用', fix:'改为「实木结构，经过X年干燥处理」' },
+    { word:'终身保修', level:'danger', reason:'需明确保修范围和免责条款', fix:'改为「X年质保，具体范围见详情页」' },
+    { word:'100%环保', level:'danger', reason:'绝对化环保宣称，需检测报告支撑', fix:'改为「E0级板材，附第三方检测报告」' },
+    { word:'零甲醛', level:'danger', reason:'需提供权威检测报告才可使用', fix:'改为「低醛工艺」「甲醛释放量符合E0标准」' },
+    { word:'绝对安全', level:'danger', reason:'极限词，安全宣称需有依据', fix:'改为「通过XX安全认证」' },
+    { word:'国际品质', level:'danger', reason:'无法证实的宣称', fix:'改为「出口同款」「符合欧盟标准」（需有证明）' },
+    { word:'领导品牌', level:'danger', reason:'极限词，需有官方认定', fix:'删除，改用具体销量或获奖说明' },
+    { word:'著名品牌', level:'danger', reason:'极限词', fix:'删除' },
+    { word:'中国第一', level:'danger', reason:'极限词，无法证实', fix:'删除' },
+    { word:'行业第一', level:'danger', reason:'极限词，无法证实', fix:'删除' },
+
+    // ── 环保/检测类（warn）──
+    { word:'无甲醛', level:'warn', reason:'需提供权威检测报告，否则属于虚假宣传', fix:'改为「低醛板材」或标注检测标准「甲醛释放量≤0.025mg/m³（E0级）」' },
+    { word:'纯天然', level:'warn', reason:'需明确说明材质来源，模糊使用易被判定违规', fix:'改为「天然实木」「原木材质」并说明树种' },
+    { word:'食品级', level:'warn', reason:'家居产品严禁使用食品级表述', fix:'删除，改为「符合儿童家具安全标准」' },
+    { word:'医用级', level:'warn', reason:'家居行业禁止使用医疗化宣称', fix:'改为「高密度」「专业级」等普通表述' },
+    { word:'医用材质', level:'warn', reason:'家居行业禁止使用医疗化宣称', fix:'具体说明材质参数' },
+    { word:'抗菌率100%', level:'warn', reason:'需有权威检测数据支撑', fix:'改为「经检测抑菌率达99%（报告编号：XX）」' },
+    { word:'全程无污染', level:'warn', reason:'绝对化环保宣称，需证明', fix:'改为「生产过程符合ISO14001环保标准」' },
+
+    // ── 质量/功效夸大（warn）──
+    { word:'秒杀全场', level:'warn', reason:'夸大竞争力宣称', fix:'改为「同档位性价比高」' },
+    { word:'超越大牌', level:'warn', reason:'横向比较宣称，易引发投诉', fix:'删除，改为自身卖点描述' },
+    { word:'媲美XX品牌', level:'warn', reason:'横向比较，且可能涉及他牌贬低', fix:'删除' },
+    { word:'买了不后悔', level:'warn', reason:'效果承诺类表述', fix:'改为「多数买家好评，可看买家秀」' },
+    { word:'一辈子', level:'warn', reason:'类绝对化承诺', fix:'改为具体使用年限，如「耐用材质，建议使用年限15年以上」' },
+    { word:'工厂直销', level:'warn', reason:'需真实，若为中间商使用则属虚假宣传', fix:'确认为工厂账号再使用，否则改为「产地直发」' },
+    { word:'原价', level:'warn', reason:'需真实对应历史价格，虚标原价为违规', fix:'确保原价有据可查，或改为「日常价」' },
+
+    // ── 资质/认证类（warn）──
+    { word:'国家认证', level:'warn', reason:'需出示官方认证文件，无文件则违规', fix:'改为「通过XX认证（证书编号：XXXX）」' },
+    { word:'权威认证', level:'warn', reason:'需指明具体认证机构', fix:'改为具体认证名称，如「通过中国家具协会质量认证」' },
+    { word:'专利技术', level:'warn', reason:'需标注专利号，否则视为虚假宣传', fix:'改为「XX专利技术（专利号：ZXXXXXX）」' },
+    { word:'获奖产品', level:'warn', reason:'需标注具体奖项名称和颁奖机构', fix:'改为「荣获XXXX年XX奖项（主办方：XX）」' },
+    { word:'明星同款', level:'warn', reason:'需有明星本人或经纪公司书面授权', fix:'无授权需删除，改为「同风格」「同类型」' },
+    { word:'网红同款', level:'warn', reason:'需有对应博主授权或使用许可', fix:'改为「同款风格」或获得授权后标注来源' },
+    { word:'设计师同款', level:'warn', reason:'需有设计师授权', fix:'改为「设计师推荐风格」并注明推荐来源' },
+
+    // ── 诱导互动（danger）──
+    { word:'点赞收藏', level:'danger', reason:'诱导互动，直接触发审核机制', fix:'删除，内容质量自然带动互动' },
+    { word:'求点赞', level:'danger', reason:'诱导互动', fix:'删除' },
+    { word:'双击收藏', level:'danger', reason:'诱导互动', fix:'删除' },
+    { word:'记得收藏', level:'danger', reason:'诱导互动', fix:'删除或改为「欢迎收藏备用」（仍有风险，建议删除）' },
+    { word:'先收藏再买', level:'danger', reason:'诱导互动', fix:'删除' },
+    { word:'关注不迷路', level:'warn', reason:'引导关注，有一定风险', fix:'可改为自然的内容结尾' },
+
+    // ── 价格/促销类（warn）──
+    { word:'亏本卖', level:'warn', reason:'虚假促销宣称，需真实', fix:'改为「让利回馈」「活动特价」' },
+    { word:'赔钱', level:'warn', reason:'虚假促销宣称', fix:'删除' },
+    { word:'免费送', level:'warn', reason:'需说明具体赠品和领取条件', fix:'改为「下单赠XX（限量/限时）」' },
+    { word:'随时涨价', level:'warn', reason:'制造虚假紧迫感，属于误导消费者', fix:'删除，改为「活动截止日期：XX」' },
+    { word:'限时限量', level:'warn', reason:'若非真实限制则为虚假宣传', fix:'确保有真实库存/时间限制，且注明具体数量' },
+
+    // ── 家居行业高频处罚词（danger）──
+    { word:'甲醛达标', level:'danger', reason:'无资质宣称检测结论属违规，近期处罚案例增多', fix:'改为「附第三方检测报告」并上传报告图' },
+    { word:'无毒无害', level:'danger', reason:'绝对化安全宣称，需有权威检测数据', fix:'改为「符合GB18580环保标准」' },
+    { word:'真材实料', level:'warn', reason:'模糊宣称，需具体说明材质', fix:'改为「18mm实木多层板」等具体材质描述' },
+    { word:'纯实木', level:'warn', reason:'需明确所有接触面均为实木，否则涉及虚假材质宣传', fix:'注明主材材质，如「框架实木+座面布艺」' },
+  ];
+
+  function runAudit() {
+    const title = document.getElementById('a-title').value.trim();
+    const body  = document.getElementById('a-body').value.trim();
+    if (!title) { alert('请填写笔记标题'); return; }
+
+    const btn = document.querySelector('#page-audit .gen-btn');
+    btn.disabled = true;
+    document.getElementById('audit-loading').classList.add('show');
+    document.getElementById('audit-result').classList.remove('show');
+
+    setTimeout(() => {
+      btn.disabled = false;
+      document.getElementById('audit-loading').classList.remove('show');
+      renderAudit(title, body);
+    }, 800);
+  }
+
+  function renderAudit(title, body) {
+    const fullText = title + ' ' + body;
+    const hits = [];
+
+    AUDIT_RULES.forEach(rule => {
+      if (fullText.includes(rule.word)) {
+        const inTitle = title.includes(rule.word);
+        hits.push({ ...rule, inTitle });
+      }
+    });
+
+    const dangers = hits.filter(h => h.level === 'danger');
+    const warns   = hits.filter(h => h.level === 'warn');
+
+    // 整体风险等级
+    let riskLevel, riskColor, riskBg, riskIcon, riskText;
+    if (dangers.length >= 2) {
+      riskLevel = '高风险'; riskColor = '#ff2442'; riskBg = '#fff0f2'; riskIcon = '🔴';
+      riskText = `检测到 ${dangers.length} 个严重违规词，笔记大概率被限流或删除，请修改后再发布。`;
+    } else if (dangers.length === 1) {
+      riskLevel = '有违规风险'; riskColor = '#ff7043'; riskBg = '#fff8f0'; riskIcon = '🟠';
+      riskText = `检测到 ${dangers.length} 个严重违规词，建议修改后发布。`;
+    } else if (warns.length > 0) {
+      riskLevel = '有潜在风险'; riskColor = '#f5a623'; riskBg = '#fffbec'; riskIcon = '🟡';
+      riskText = `未检测到极限词，但有 ${warns.length} 个表述存在潜在风险，建议酌情修改。`;
+    } else {
+      riskLevel = '暂未检测到违规词'; riskColor = '#27ae60'; riskBg = '#f0fff4'; riskIcon = '✅';
+      riskText = '常见家居违规词未命中，但建议发布前仍人工复查一遍，平台审核标准持续更新。';
+    }
+
+    // 高亮显示命中词
+    function highlight(text, hitsArr) {
+      let result = text;
+      hitsArr.forEach(h => {
+        const color = h.level === 'danger' ? '#ff2442' : '#f5a623';
+        const bg    = h.level === 'danger' ? '#fff0f2' : '#fffbec';
+        result = result.split(h.word).join(
+          `<mark style="background:${bg};color:${color};border-radius:3px;padding:0 2px;font-weight:700;">${h.word}</mark>`
+        );
+      });
+      return result;
+    }
+
+    const titleHighlighted = hits.length ? highlight(title, hits) : title;
+    const bodyHighlighted  = hits.length && body ? highlight(body, hits) : body;
+
+    document.getElementById('audit-result-header').innerHTML =
+      `${riskIcon} 检测结果：<span style="color:${riskColor}">${riskLevel}</span>`;
+
+    document.getElementById('audit-result-body').innerHTML = `
+
+      <!-- 整体风险 -->
+      <div style="background:${riskBg}; border:1px solid ${riskColor}40; border-radius:10px; padding:14px 16px; margin-bottom:20px;">
+        <div style="font-size:15px; font-weight:700; color:${riskColor}; margin-bottom:4px;">${riskIcon} ${riskLevel}</div>
+        <div style="font-size:13px; color:#444;">${riskText}</div>
+        <div style="font-size:12px; color:#aaa; margin-top:6px;">共命中 ${dangers.length} 个严重违规词 · ${warns.length} 个潜在风险词</div>
+      </div>
+
+      <!-- 内容高亮预览 -->
+      <div class="result-section">
+        <h3>🔎 内容预览（命中词已标记）</h3>
+        <div style="background:#f7f7f7; border-radius:10px; padding:14px; font-size:14px; line-height:1.8;">
+          <div style="margin-bottom:8px;"><span style="font-size:11px;color:#aaa;font-weight:600;">标题：</span><br>${titleHighlighted}</div>
+          ${body ? `<div><span style="font-size:11px;color:#aaa;font-weight:600;">正文：</span><br>${bodyHighlighted}</div>` : ''}
+        </div>
+      </div>
+
+      <!-- 严重违规词 -->
+      ${dangers.length > 0 ? `
+      <div class="result-section">
+        <h3>🔴 严重违规词（必须修改）</h3>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          ${dangers.map(h => `
+            <div style="background:#fff0f2; border-left:4px solid #ff2442; border-radius:0 10px 10px 0; padding:12px 14px;">
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+                <span style="background:#ff2442; color:white; border-radius:4px; padding:1px 8px; font-size:12px; font-weight:700;">「${h.word}」</span>
+                <span style="font-size:11px; color:#888;">${h.inTitle ? '出现在标题' : '出现在正文'}</span>
+              </div>
+              <div style="font-size:12px; color:#666; margin-bottom:4px;">⚠️ 违规原因：${h.reason}</div>
+              <div style="font-size:12px; color:#27ae60; font-weight:600;">✏️ 修改建议：${h.fix}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      ` : ''}
+
+      <!-- 潜在风险词 -->
+      ${warns.length > 0 ? `
+      <div class="result-section">
+        <h3>🟡 潜在风险词（建议修改）</h3>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          ${warns.map(h => `
+            <div style="background:#fffbec; border-left:4px solid #f5a623; border-radius:0 10px 10px 0; padding:12px 14px;">
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+                <span style="background:#f5a623; color:white; border-radius:4px; padding:1px 8px; font-size:12px; font-weight:700;">「${h.word}」</span>
+                <span style="font-size:11px; color:#888;">${h.inTitle ? '出现在标题' : '出现在正文'}</span>
+              </div>
+              <div style="font-size:12px; color:#666; margin-bottom:4px;">⚠️ 风险原因：${h.reason}</div>
+              <div style="font-size:12px; color:#27ae60; font-weight:600;">✏️ 修改建议：${h.fix}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      ` : ''}
+
+      <!-- 通过提示 -->
+      ${hits.length === 0 ? `
+      <div class="result-section">
+        <h3>✅ 检测通过</h3>
+        <div class="announce" style="margin:0; background:#f0fff4; border-color:#b2dfdb; color:#1b5e20;">
+          <span class="icon">💡</span>
+          <span>未命中家居家装行业常见违规词。发布前建议再检查以下几点：<br>
+          1. 所有「检测报告/认证」宣称是否有图片佐证；<br>
+          2. 材质描述是否准确（如「纯实木」需所有木质部分均为实木）；<br>
+          3. 价格/库存限制是否真实有效。</span>
+        </div>
+      </div>
+      ` : ''}
+
+      <!-- 合规写法小贴士 -->
+      <div class="result-section">
+        <h3>📌 家居笔记合规写法小贴士</h3>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          ${[
+            { bad:'零甲醛/无甲醛', good:'E0级板材，附第三方检测报告' },
+            { bad:'纯实木', good:'主框架实木（橡木/松木），注明树种' },
+            { bad:'永不褪色/永不变形', good:'色牢度达4级以上（检测报告）' },
+            { bad:'最好/顶级/第一', good:'口碑较好/工艺精良/综合评分高' },
+            { bad:'甲醛达标', good:'甲醛释放量≤0.025mg/m³（E0标准）' },
+            { bad:'100%环保', good:'符合GB18580-2017环保标准' },
+          ].map(tip => `
+            <div style="background:#f7f7f7; border-radius:8px; padding:10px 12px; font-size:12px;">
+              <div style="color:#ff2442; margin-bottom:4px;">❌ ${tip.bad}</div>
+              <div style="color:#27ae60;">✅ ${tip.good}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="action-row">
+        <button class="action-btn primary" onclick="resetAudit()">🔄 重新检测</button>
+      </div>
+    `;
+
+    document.getElementById('audit-result').classList.add('show');
+    document.getElementById('audit-result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function resetAudit() {
+    document.getElementById('audit-result').classList.remove('show');
+    document.getElementById('a-title').value = '';
+    document.getElementById('a-body').value = '';
+    document.querySelector('#page-audit .form-card').scrollIntoView({ behavior: 'smooth' });
   }
 
   function resetDiag() {
