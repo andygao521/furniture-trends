@@ -62,22 +62,30 @@
       border-bottom: 2px solid #f0f0f0;
       position: sticky; top: 0; z-index: 20;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
     }
+    .main-tab-bar::-webkit-scrollbar { display: none; }
     .main-tab {
-      flex: 1;
-      padding: 14px 0;
+      flex: 0 0 auto;
+      padding: 13px 16px;
       text-align: center;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
       color: var(--gray-3);
       cursor: pointer;
       border-bottom: 3px solid transparent;
       transition: all .2s;
-      display: flex; align-items: center; justify-content: center; gap: 6px;
+      display: flex; align-items: center; justify-content: center; gap: 4px;
+      white-space: nowrap;
     }
     .main-tab.active {
       color: var(--red);
       border-bottom-color: var(--red);
+    }
+    @media(max-width: 480px) {
+      .main-tab { font-size: 13px; padding: 12px 14px; }
     }
 
     /* ── Pages ── */
@@ -89,16 +97,24 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
       background: white;
       padding: 10px 16px;
       border-bottom: 1px solid #f0f0f0;
       font-size: 13px;
       color: var(--gray-2);
-      position: sticky; top: 0; z-index: 10;
+      position: sticky; top: 48px; z-index: 10;
       box-shadow: 0 1px 4px rgba(0,0,0,0.05);
     }
     .week-bar strong { color: var(--red); }
-    .week-bar .week-btns { display: flex; gap: 6px; }
+    .week-bar .week-btns {
+      display: flex; gap: 6px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .week-bar .week-btns::-webkit-scrollbar { display: none; }
     .week-btn {
       border: 1px solid var(--gray-4);
       border-radius: 20px;
@@ -108,6 +124,8 @@
       font-size: 12px;
       color: var(--gray-2);
       transition: all .2s;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .week-btn.active {
       background: var(--red);
@@ -142,7 +160,7 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 12px;
     }
-    @media(max-width: 600px) { .bench-grid { grid-template-columns: 1fr; } }
+    @media(max-width: 700px) { .bench-grid { grid-template-columns: 1fr; } }
 
     .bench-card {
       background: var(--card);
@@ -199,7 +217,7 @@
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
     }
-    @media(max-width: 520px) { .trend-grid { grid-template-columns: 1fr; } }
+    @media(max-width: 700px) { .trend-grid { grid-template-columns: 1fr; } }
 
     .trend-card {
       background: var(--card);
@@ -342,7 +360,7 @@
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
     }
-    @media(max-width: 520px) { .dir-grid { grid-template-columns: 1fr; } }
+    @media(max-width: 700px) { .dir-grid { grid-template-columns: 1fr; } }
 
     .dir-card {
       background: var(--card);
@@ -435,7 +453,7 @@
     .form-row .hint { font-size: 11px; color: var(--gray-3); margin-top: 4px; }
 
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    @media(max-width: 520px) { .form-grid { grid-template-columns: 1fr; } }
+    @media(max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
 
     .gen-btn {
       width: 100%;
@@ -523,7 +541,7 @@
     .title-item .copy-btn:hover { border-color: var(--red); color: var(--red); }
 
     .cover-tips { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    @media(max-width:480px) { .cover-tips { grid-template-columns: 1fr; } }
+    @media(max-width:600px) { .cover-tips { grid-template-columns: 1fr; } }
     .cover-tip {
       background: var(--red-light);
       border-radius: 8px;
@@ -613,6 +631,42 @@
       background: var(--red);
       border-color: var(--red);
       color: white;
+    }
+
+    /* ── 移动端全局补丁 ── */
+    @media(max-width: 480px) {
+      .header h1 { font-size: 18px; }
+      .header .sub { font-size: 12px; flex-wrap: wrap; justify-content: center; gap: 6px; }
+      .main { padding: 12px 10px 40px; }
+      .tool-wrap { padding: 12px 10px 40px; }
+      .section-title { font-size: 15px; }
+      .bench-card { padding: 12px; }
+      .trend-card { padding: 12px; }
+      .formula-card { padding: 12px; }
+      .dir-card { padding: 12px; }
+      .tool-hero { flex-direction: column; gap: 8px; padding: 14px; }
+      .tool-hero .icon { font-size: 26px; }
+      .tool-hero h2 { font-size: 15px; }
+      .form-card { padding: 14px; }
+      .gen-btn { font-size: 15px; padding: 13px; }
+      .result-body { padding: 14px; }
+      .result-header { font-size: 14px; padding: 12px 14px; }
+      .action-row { flex-direction: column; }
+      .action-btn { width: 100%; }
+      /* 诊断指标4格改2列 */
+      #diag-result-body .result-section > div[style*="grid-template-columns: repeat(2"] {
+        grid-template-columns: 1fr 1fr !important;
+      }
+      /* 合规对照表改单列 */
+      #audit-result-body .result-section > div[style*="grid-template-columns:1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+      }
+      /* 品类筛选 tab 横向滚动 */
+      .tab-bar { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+      .tab-bar::-webkit-scrollbar { display: none; }
+      .tab-btn { flex-shrink: 0; }
+      /* 周次导航 sticky top 随 tab 栏高度调整 */
+      .week-bar { top: 46px; }
     }
 
     /* ── Announce bar ── */
