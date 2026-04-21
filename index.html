@@ -2012,11 +2012,27 @@
         </div>
       </div>
 
+      <!-- 封面示意图生成 -->
+      <div class="result-section">
+        <h3>🖼️ 封面示意图生成</h3>
+        <div style="background:#f0f4ff; border:1px solid #c5d5ff; border-radius:10px; padding:14px 16px; margin-bottom:12px; font-size:13px; color:#2c3e6b;">
+          💡 基于你的产品信息，已生成封面设计 Prompt。复制后粘贴到
+          <a href="https://yiyan.baidu.com/" target="_blank" style="color:#ff2442; font-weight:600;">文心一言</a>、
+          <a href="https://jimeng.jianying.com/" target="_blank" style="color:#ff2442; font-weight:600;">即梦</a> 或
+          <a href="https://doubao.com/" target="_blank" style="color:#ff2442; font-weight:600;">豆包</a>
+          即可生成参考封面图
+        </div>
+        <div id="cover-prompt-wrap" style="display:flex; flex-direction:column; gap:10px;"></div>
+      </div>
+
       <div class="action-row">
         <button class="action-btn" onclick="copyAllTitles()">📋 复制全部标题</button>
         <button class="action-btn primary" onclick="resetForm()">🔄 重新生成</button>
       </div>
     `;
+
+    // 渲染封面 Prompt
+    renderCoverPrompts(product, cat, usp, target, style, price);
 
     document.getElementById('result-area').classList.add('show');
     document.getElementById('result-area').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -2160,6 +2176,85 @@
     const titles = [...document.querySelectorAll('.title-item .t-text')].map(el => el.textContent).join('\n');
     navigator.clipboard.writeText(titles).then(() => {
       alert('✅ 已复制全部标题到剪贴板');
+    });
+  }
+
+  // ── 封面示意图 Prompt 生成 ──
+  function renderCoverPrompts(product, cat, usp, target, style, price) {
+    const ci = catMap[cat];
+    const trend = catTrend[cat];
+    const uspText = usp || '高品质工艺';
+    const targetText = target || '家居爱好者';
+    const priceHint = price === 'high' ? '高端质感，精致细节' : price === 'low' ? '简洁清新，亲民感' : '品质生活感';
+
+    // 根据品类定义场景背景
+    const sceneMap = {
+      sofa:     { scene:'现代简约客厅，浅色地板，落地窗，自然光', prop:'沙发旁放一株绿植，茶几上有一本书和咖啡杯', angle:'45度斜角拍摄，带入完整客厅空间' },
+      bed:      { scene:'北欧风卧室，白色床品，木质床头柜，暖色灯光', prop:'床头摆放台灯、小绿植', angle:'正对床铺的平视角度，床品整洁' },
+      mattress: { scene:'简洁卧室，白色床品，柔和自然光从窗帘透入', prop:'床垫侧面剖面可见，或人物侧躺展示厚度', angle:'床侧面45度，强调厚度和层次' },
+      cabinet:  { scene:'现代简约玄关或卧室，浅色墙面，木质地板', prop:'柜内有序摆放物品，柜外放绿植点缀', angle:'柜正面全景，局部细节特写' },
+      light:    { scene:'温馨客厅或餐厅，夜间或窗帘遮光，暗背景', prop:'灯光投影清晰可见，旁边有绿植或装饰品', angle:'仰视或平视，突出光晕和氛围' },
+      chair:    { scene:'北欧风书房或餐厅，木质书桌，自然光', prop:'桌面有笔记本电脑或书籍，桌旁放绿植', angle:'椅子45度侧角，人物坐姿自然放松' },
+      dining:   { scene:'现代餐厅，吊灯暖光，浅色墙面，木质地板', prop:'餐桌上摆放餐具、蜡烛、小花瓶', angle:'斜俯角45度，展示餐桌整体和座椅搭配' },
+      shelf:    { scene:'客厅角落或阳台，浅色墙面，自然采光充足', prop:'架上摆放绿植、书籍、小摆件，层次丰富', angle:'正面全景，搭配地面和墙面背景' },
+    };
+
+    const s = sceneMap[cat] || sceneMap['shelf'];
+
+    // 内容风格对应的拍摄风格
+    const styleHint = {
+      scene:   '真实家居场景，氛围感，ins风，自然光，胶片质感',
+      compare: '左右分屏对比，左边杂乱或空白，右边整洁美观，色彩对比强烈',
+      edu:     '图文结合风格，产品居中，四周有标注文字和箭头，信息图感',
+      story:   '主理人视角，温暖真实，人物侧身或背影入镜，生活感强',
+      node:    '节日氛围感，暖色调，可加五一/节日相关装饰元素',
+      all:     '真实家居场景，温暖自然光，高质感摄影风格',
+    }[style] || '真实家居场景，温暖自然光，高质感摄影风格';
+
+    const prompts = [
+      {
+        label: '方案一：场景氛围封面',
+        icon: '🏠',
+        prompt: `商业摄影风格，小红书家居笔记封面图。${s.scene}中，放置一款${product}（${uspText}）。${s.prop}。拍摄角度：${s.angle}。整体风格：${styleHint}，${priceHint}。画面比例9:16，竖图，高清细腻，真实家居感，不要卡通或手绘风格。`,
+      },
+      {
+        label: '方案二：产品特写封面',
+        icon: '🔍',
+        prompt: `产品广告摄影，小红书封面风格。主体是一款${product}（${uspText}），背景简洁，浅色或渐变背景，产品居中稍偏下方。局部特写展示材质细节（纹理/缝线/五金件）。打侧光或顶光，突出质感。整体色调：${price === 'high' ? '高级灰+金色，奢华感' : price === 'low' ? '清新白+木色，亲民感' : '白+原木色，品质感'}。画面比例9:16，竖图，高清，商业摄影质感。`,
+      },
+      {
+        label: '方案三：前后对比封面',
+        icon: '↔️',
+        prompt: `小红书家居改造笔记封面，左右分屏对比图。左半边：杂乱普通的${ci.name}场景，旧款产品，色调偏灰暗。右半边：换上${product}后的整洁美观空间，${s.scene}，暖色调，氛围感强。中间用细线分隔，可加"改造前"和"改造后"文字标注。画面比例9:16，竖图，真实感，非手绘。`,
+      },
+    ];
+
+    const wrap = document.getElementById('cover-prompt-wrap');
+    wrap.innerHTML = prompts.map((p, i) => `
+      <div style="background:#f7f7f7; border-radius:10px; padding:14px; border-left:4px solid var(--red);">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+          <span style="font-size:13px; font-weight:700; color:var(--gray-1);">${p.icon} ${p.label}</span>
+          <button onclick="copyPrompt('cover-prompt-text-${i}', this)"
+            style="font-size:12px; padding:4px 12px; border:1px solid var(--red); color:var(--red); background:white; border-radius:20px; cursor:pointer; white-space:nowrap;">
+            复制 Prompt
+          </button>
+        </div>
+        <div id="cover-prompt-text-${i}" style="font-size:12px; color:#555; line-height:1.7; word-break:break-all;">${p.prompt}</div>
+        <div style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap;">
+          <a href="https://jimeng.jianying.com/" target="_blank"
+            style="font-size:11px; padding:3px 10px; background:#f0f4ff; color:#2c3e6b; border-radius:20px; text-decoration:none;">→ 即梦生图</a>
+          <a href="https://doubao.com/" target="_blank"
+            style="font-size:11px; padding:3px 10px; background:#fff0f2; color:var(--red); border-radius:20px; text-decoration:none;">→ 豆包生图</a>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function copyPrompt(id, btn) {
+    const text = document.getElementById(id).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✅ 已复制';
+      setTimeout(() => { btn.textContent = '复制 Prompt'; }, 2000);
     });
   }
 
