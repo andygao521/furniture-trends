@@ -645,6 +645,7 @@
 <div class="main-tab-bar">
   <div class="main-tab active" onclick="switchMainTab('trends', this)">📊 趋势看板</div>
   <div class="main-tab" onclick="switchMainTab('tools', this)">🛠️ 实用工具</div>
+  <div class="main-tab" onclick="switchMainTab('diag', this)">🔍 账号诊断</div>
 </div>
 
 <!-- ═══ Page: 趋势看板 ═══ -->
@@ -804,6 +805,91 @@
   </div>
 </div><!-- end page-tools -->
 
+<!-- ═══ Page: 账号诊断 ═══ -->
+<div class="page" id="page-diag">
+  <div class="tool-wrap">
+
+    <div class="tool-hero">
+      <div class="icon">🔍</div>
+      <div>
+        <h2>账号内容诊断</h2>
+        <p>输入商家账号信息，对标本周行业基准，快速定位内容短板，获取精准改进建议</p>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="form-row">
+        <label>商家名称 / 账号昵称 <span class="req">*</span></label>
+        <input type="text" id="d-name" placeholder="例：源氏木语旗舰店、林氏家居官方账号" />
+      </div>
+      <div class="form-grid">
+        <div class="form-row">
+          <label>品类 <span class="req">*</span></label>
+          <select id="d-cat">
+            <option value="">请选择品类</option>
+            <option value="sofa">🛋️ 沙发</option>
+            <option value="bed">🛏️ 床</option>
+            <option value="mattress">💤 床垫</option>
+            <option value="cabinet">🗄️ 柜类</option>
+            <option value="light">💡 灯具</option>
+            <option value="chair">🪑 坐具/椅子</option>
+            <option value="dining">🍽️ 餐桌椅</option>
+            <option value="shelf">🪞 几类/架类</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>商家层级 <span class="opt">（选填）</span></label>
+          <select id="d-level">
+            <option value="">不清楚</option>
+            <option value="ka">KA（品牌大商家）</option>
+            <option value="mid">成长型商家</option>
+            <option value="new">新商/小商家</option>
+          </select>
+        </div>
+      </div>
+      <div class="section-title" style="margin-top:8px; font-size:13px;">填写近7天数据（尽量填，越多越准）</div>
+      <div class="form-grid">
+        <div class="form-row">
+          <label>日均发布笔记数</label>
+          <input type="number" id="d-post" placeholder="例：2" min="0" step="0.1" />
+        </div>
+        <div class="form-row">
+          <label>笔记平均 CTR（%）</label>
+          <input type="number" id="d-ctr" placeholder="例：8.5" min="0" step="0.1" />
+        </div>
+        <div class="form-row">
+          <label>商品转化率（%）</label>
+          <input type="number" id="d-cvr" placeholder="例：3.2" min="0" step="0.1" />
+        </div>
+        <div class="form-row">
+          <label>直播场均时长（h）</label>
+          <input type="number" id="d-live" placeholder="例：1.5（不直播填0）" min="0" step="0.1" />
+        </div>
+      </div>
+      <div class="form-row">
+        <label>近期内容方向 <span class="opt">（选填，简单描述）</span></label>
+        <textarea id="d-content" placeholder="例：主要发产品展示图、偶尔做拆箱视频，没有统一内容方向"></textarea>
+      </div>
+      <div class="form-row">
+        <label>主要痛点 / 想改善的问题 <span class="opt">（选填）</span></label>
+        <textarea id="d-pain" placeholder="例：发了很多笔记但曝光一直上不去，不知道怎么选题"></textarea>
+      </div>
+      <button class="gen-btn" onclick="runDiag()">🔍 开始诊断</button>
+    </div>
+
+    <div class="loading-mask" id="diag-loading">
+      <div class="spinner"></div>
+      <div>正在对标本周行业数据进行诊断…</div>
+    </div>
+
+    <div class="result-area" id="diag-result">
+      <div class="result-header">📋 <span id="diag-result-title">账号诊断报告</span></div>
+      <div class="result-body" id="diag-result-body"></div>
+    </div>
+
+  </div>
+</div><!-- end page-diag -->
+
 <div class="footer">
   家具家装行业风向看板 · 小红书电商 · 行业三部-七组（家具）<br>
   数据基于行业动销商家笔记表现提炼 · 每周更新 · 仅供内部参考
@@ -816,6 +902,257 @@
     el.classList.add('active');
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('page-' + tab).classList.add('active');
+  }
+
+  // ── 账号诊断 ──
+  function runDiag() {
+    const name    = document.getElementById('d-name').value.trim();
+    const cat     = document.getElementById('d-cat').value;
+    const level   = document.getElementById('d-level').value;
+    const post    = parseFloat(document.getElementById('d-post').value);
+    const ctr     = parseFloat(document.getElementById('d-ctr').value);
+    const cvr     = parseFloat(document.getElementById('d-cvr').value);
+    const live    = parseFloat(document.getElementById('d-live').value);
+    const content = document.getElementById('d-content').value.trim();
+    const pain    = document.getElementById('d-pain').value.trim();
+
+    if (!name) { alert('请填写商家名称'); return; }
+    if (!cat)  { alert('请选择品类'); return; }
+
+    const hasAnyData = !isNaN(post) || !isNaN(ctr) || !isNaN(cvr) || !isNaN(live);
+
+    const btn = document.querySelector('#page-diag .gen-btn');
+    btn.disabled = true;
+    document.getElementById('diag-loading').classList.add('show');
+    document.getElementById('diag-result').classList.remove('show');
+
+    setTimeout(() => {
+      btn.disabled = false;
+      document.getElementById('diag-loading').classList.remove('show');
+      renderDiag(name, cat, level, post, ctr, cvr, live, content, pain, hasAnyData);
+    }, 1400);
+  }
+
+  function diagScore(val, benchAvg, benchTop) {
+    if (isNaN(val)) return null;
+    if (val >= benchTop) return 'top';
+    if (val >= benchAvg) return 'avg';
+    if (val >= benchAvg * 0.7) return 'low';
+    return 'danger';
+  }
+
+  const scoreLabel = { top:'🏆 优秀', avg:'✅ 达标', low:'⚠️ 待提升', danger:'🔴 明显不足', null:'— 未填写' };
+  const scoreColor = { top:'#f5a623', avg:'#27ae60', low:'#ff7043', danger:'#ff2442', null:'#aaa' };
+  const scoreBg    = { top:'#fff8e1', avg:'#f0fff4', low:'#fff8f0', danger:'#fff0f2', null:'#f7f7f7' };
+
+  function renderDiag(name, cat, level, post, ctr, cvr, live, content, pain, hasAnyData) {
+    const w = weekData[currentWeek];
+    const bench = w.bench;
+    const trend = catTrend[cat];
+    const ci = catMap[cat];
+
+    // 解析基准值
+    const avgPost = parseFloat(bench.avg.post);
+    const topPost = parseFloat(bench.top.post);
+    const avgCtr  = parseFloat(bench.avg.ctr);
+    const topCtr  = parseFloat(bench.top.ctr);
+    const avgCvr  = parseFloat(bench.avg.cvr);
+    const topCvr  = parseFloat(bench.top.cvr);
+    const avgLive = parseFloat(bench.avg.live);
+    const topLive = parseFloat(bench.top.live);
+
+    const postScore = diagScore(post, avgPost, topPost);
+    const ctrScore  = diagScore(ctr,  avgCtr,  topCtr);
+    const cvrScore  = diagScore(cvr,  avgCvr,  topCvr);
+    const liveScore = diagScore(live, avgLive, topLive);
+
+    // 找出最弱项
+    const items = [
+      { key:'post', score:postScore, name:'发布频率', val:post, avg:bench.avg.post, top:bench.top.post, unit:'篇/天' },
+      { key:'ctr',  score:ctrScore,  name:'笔记CTR',  val:ctr,  avg:bench.avg.ctr,  top:bench.top.ctr,  unit:'%' },
+      { key:'cvr',  score:cvrScore,  name:'商品转化率', val:cvr,  avg:bench.avg.cvr,  top:bench.top.cvr,  unit:'%' },
+      { key:'live', score:liveScore, name:'直播时长',  val:live, avg:bench.avg.live, top:bench.top.live, unit:'h' },
+    ];
+
+    const filled = items.filter(i => i.score !== null);
+    const weakItems = filled.filter(i => i.score === 'danger' || i.score === 'low');
+    const topItems  = filled.filter(i => i.score === 'top');
+
+    // 整体评级
+    let overallGrade, overallColor, overallBg, overallText;
+    if (!hasAnyData) {
+      overallGrade = '待完善';
+      overallColor = '#888';
+      overallBg = '#f7f7f7';
+      overallText = '未填写量化数据，以下为基于内容方向的定性诊断建议。';
+    } else {
+      const dangerCount = filled.filter(i => i.score === 'danger').length;
+      const lowCount    = filled.filter(i => i.score === 'low').length;
+      const topCount    = filled.filter(i => i.score === 'top').length;
+      if (dangerCount >= 2) { overallGrade = '需重点关注'; overallColor = '#ff2442'; overallBg = '#fff0f2'; overallText = '多项核心指标明显低于行业均值，建议本周优先优化内容方向和发布节奏。'; }
+      else if (dangerCount === 1 || lowCount >= 2) { overallGrade = '有改进空间'; overallColor = '#ff7043'; overallBg = '#fff8f0'; overallText = '整体基本达标，但存在明显短板，针对性优化可快速提升表现。'; }
+      else if (topCount >= 2) { overallGrade = '表现优秀'; overallColor = '#27ae60'; overallBg = '#f0fff4'; overallText = '多项指标达到TOP商家水平，建议继续放大优势方向，加大投流测试。'; }
+      else { overallGrade = '整体达标'; overallColor = '#2980b9'; overallBg = '#e3f2fd'; overallText = '指标基本达到行业均值，有稳步提升空间，可参照TOP商家标准逐项突破。'; }
+    }
+
+    // 生成具体建议
+    const suggestions = buildDiagSuggestions(cat, postScore, ctrScore, cvrScore, liveScore, content, pain, level, trend, w);
+
+    document.getElementById('diag-result-title').textContent = `🔍 ${name} · ${ci.icon}${ci.name} · 内容诊断报告`;
+
+    document.getElementById('diag-result-body').innerHTML = `
+
+      <!-- 整体评级 -->
+      <div class="result-section">
+        <h3>📊 整体诊断评级</h3>
+        <div style="background:${overallBg}; border:1px solid ${overallColor}40; border-radius:10px; padding:16px; display:flex; align-items:flex-start; gap:14px;">
+          <div style="font-size:28px; flex-shrink:0;">
+            ${overallGrade === '表现优秀' ? '🏆' : overallGrade === '整体达标' ? '✅' : overallGrade === '有改进空间' ? '⚠️' : overallGrade === '需重点关注' ? '🔴' : '📝'}
+          </div>
+          <div>
+            <div style="font-size:18px; font-weight:700; color:${overallColor}; margin-bottom:4px;">${overallGrade}</div>
+            <div style="font-size:13px; color:#444;">${overallText}</div>
+            <div style="font-size:12px; color:#888; margin-top:6px;">对标基准：${currentWeek} · 家具家装行业 ${bench.avg.post.includes('~') ? bench.avg.post : bench.avg.post} 均值</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 指标对标 -->
+      ${hasAnyData ? `
+      <div class="result-section">
+        <h3>📈 指标对标（本周行业均值）</h3>
+        <div style="display:grid; grid-template-columns: repeat(2,1fr); gap:10px;">
+          ${items.map(item => `
+            <div style="background:${item.score ? scoreBg[item.score] : '#f7f7f7'}; border-radius:10px; padding:14px; border-left:4px solid ${item.score ? scoreColor[item.score] : '#ccc'};">
+              <div style="font-size:12px; color:#888; margin-bottom:4px;">${item.name}</div>
+              <div style="font-size:20px; font-weight:700; color:${item.score ? scoreColor[item.score] : '#ccc'};">
+                ${isNaN(item.val) ? '—' : item.val + item.unit}
+              </div>
+              <div style="font-size:11px; color:#aaa; margin-top:4px;">
+                均值 ${item.avg} · TOP ${item.top}
+              </div>
+              <div style="font-size:12px; font-weight:600; margin-top:6px; color:${item.score ? scoreColor[item.score] : '#aaa'};">
+                ${scoreLabel[item.score || 'null']}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      ` : ''}
+
+      <!-- 短板分析 -->
+      ${weakItems.length > 0 ? `
+      <div class="result-section">
+        <h3>🔧 核心短板 & 改进方向</h3>
+        <div class="title-list">
+          ${weakItems.map(item => `
+            <div class="title-item" style="background:#fff8f0; border-left-color:${scoreColor[item.score]};">
+              <span class="t-num" style="background:${scoreColor[item.score]};">${item.name.slice(0,2)}</span>
+              <span class="t-text">${getDiagFix(item.key, item.val, item.avg, cat, bench)}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      ` : ''}
+
+      <!-- 本周内容建议 -->
+      <div class="result-section">
+        <h3>🎯 本周内容行动建议</h3>
+        <div class="title-list">
+          ${suggestions.map((s,i) => `
+            <div class="title-item">
+              <span class="t-num">${i+1}</span>
+              <span class="t-text">${s}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- 本周最适合的内容方向 -->
+      <div class="result-section">
+        <h3>🔥 ${ci.icon}${ci.name}品类 · 本周最强内容方向</h3>
+        <div class="announce" style="margin:0; background:#fff0f2; border-color:#ffcdd4;">
+          <span class="icon">📌</span>
+          <div>
+            <strong>${trend.angle}</strong>，参考CTR <strong>${trend.ctr}</strong><br>
+            <span style="font-size:12px; color:#666; margin-top:4px; display:block;">参考标题：「${trend.hook}」</span>
+          </div>
+        </div>
+        <div style="margin-top:10px;">
+          ${w.trends[cat].map((it,i) => `
+            <div class="dir-item" style="margin-bottom:8px; font-size:13px; color:#444;">
+              <span class="arrow up" style="margin-right:6px;">↑</span>
+              <span><strong>${it.t}</strong>：${it.d}<span class="ctr-tag" style="margin-left:6px;">${it.ctr}</span></span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="action-row">
+        <button class="action-btn primary" onclick="resetDiag()">🔄 重新诊断</button>
+      </div>
+    `;
+
+    document.getElementById('diag-result').classList.add('show');
+    document.getElementById('diag-result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function getDiagFix(key, val, avg, cat, bench) {
+    const fixes = {
+      post: `发布频率偏低（当前约 ${isNaN(val)?'不详':val+'篇/天'}，行业均值 ${bench.avg.post}）。建议每天保持至少 1-2 篇发布，内容可拆解：产品展示 + 场景搭配 + 选购科普三类轮流发，素材不够可先用手机拍摄真实使用场景。`,
+      ctr:  `笔记 CTR 偏低（当前 ${isNaN(val)?'不详':val+'%'}，行业均值 ${bench.avg.ctr}）。CTR 低通常是封面和标题问题：封面优先拍「改造前后对比」或「空间全景氛围」；标题换成痛点型或数字型公式，避免纯产品名+宣传词的无效标题。`,
+      cvr:  `商品转化率偏低（当前 ${isNaN(val)?'不详':val+'%'}，行业均值 ${bench.avg.cvr}）。建议在笔记中加入「价格锚点」「限时利益点」或「真实买家评价截图」，商品主图和详情页也需配合内容风向同步更新。`,
+      live: `直播场均时长偏低（当前 ${isNaN(val)?'不详':val+'h'}，行业均值 ${bench.avg.live}）。建议单场直播不低于2小时，开播前30分钟是流量高峰，需提前准备好热场话术和引流款；连播商家可设置固定开播时间，培养粉丝收看习惯。`,
+    };
+    return fixes[key] || '';
+  }
+
+  function buildDiagSuggestions(cat, postScore, ctrScore, cvrScore, liveScore, content, pain, level, trend, w) {
+    const suggestions = [];
+    const ci = catMap[cat];
+
+    // 基于本周最强内容方向
+    suggestions.push(`本周${ci.icon}${ci.name}品类最强方向是「${trend.angle}」（参考CTR ${trend.ctr}），建议本周发布至少1条该方向内容，标题参考：「${trend.hook}」`);
+
+    // 五一节点
+    suggestions.push(`五一倒计时节点内容必发：现在是五一前最后蓄水期，建议本周发1条「五一装修清单/选购避坑」类内容，在笔记中植入节日利益点（活动价/赠品/限时优惠）`);
+
+    // 内容结构建议
+    if (content && (content.includes('产品') || content.includes('展示') || content.includes('图'))) {
+      suggestions.push(`当前内容以产品展示图为主，建议加入「场景化」内容：把产品放到真实家居场景中拍摄（客厅/卧室/书房），配合房间整体氛围，比单品白底图 CTR 高出50%以上`);
+    } else if (content) {
+      suggestions.push(`建议内容保持「3:1:1」结构：3条种草/场景内容 + 1条选购科普/避坑 + 1条真实买家晒单，形成稳定内容节奏`);
+    } else {
+      suggestions.push(`建议建立固定内容节奏：每周发布5-7条，品类分配建议「场景氛围感60% + 选购科普30% + 买家秀10%」`);
+    }
+
+    // 痛点针对
+    if (pain && pain.includes('曝光')) {
+      suggestions.push(`曝光上不去首先看封面点击率：拍一张「改造前后对比」的封面图，左边杂乱旧家/右边整洁新家，配文「同一个空间，换了这个之后」，这类封面 CTR 通常比产品展示图高2-3倍`);
+    } else if (pain && pain.includes('选题')) {
+      suggestions.push(`选题方向参考本周热点：「${w.hotTags.freq.slice(0,3).join('、')}」是本周家具赛道高频词，「${w.hotTags.node[0]}」是本周核心节点，内容选题围绕这些词展开优先级最高`);
+    } else {
+      suggestions.push(`建议每周一复盘上周数据：找出 CTR 最高的1条笔记，分析其封面/标题/内容结构，下周做2-3条同类型内容进行复制放大`);
+    }
+
+    // 层级针对
+    if (level === 'ka') {
+      suggestions.push(`KA商家建议测试「品牌故事+主理人出镜」内容方向：有品牌背书的商家用主理人真人出镜，介绍选材/工厂/工艺细节，信任感强，商品转化率通常高于普通种草内容`);
+    } else if (level === 'new') {
+      suggestions.push(`新商阶段建议专注1个内容方向打透：选一个本周最强的内容方向（如「${trend.angle}」），连续发5-7条同类型内容，比分散尝试多个方向更容易找到爆款规律`);
+    }
+
+    return suggestions.slice(0, 5);
+  }
+
+  function resetDiag() {
+    document.getElementById('diag-result').classList.remove('show');
+    ['d-name','d-post','d-ctr','d-cvr','d-live','d-content','d-pain'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    document.getElementById('d-cat').value = '';
+    document.getElementById('d-level').value = '';
+    document.querySelector('#page-diag .form-card').scrollIntoView({ behavior: 'smooth' });
   }
 
   // ── Week Data & Switcher ──
